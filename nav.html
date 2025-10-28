@@ -65,20 +65,27 @@ body {
 }
 
 /* ✅ 核心：无缝 hover 保持展开 */
-.nav-item:hover > .dropdown,
-.dropdown:hover {
+/* ✅ 让 hover 保持稳定 */
+.nav-item:hover > .dropdown {
   display: block;
 }
 
-/* 防止闪退的“缓冲带” */
-.nav-item::after {
+.nav-item {
+  position: relative;
+}
+
+/* ✅ 防止下拉菜单和主按钮之间的空隙 */
+.nav-item:hover::before {
   content: "";
   position: absolute;
-  top: 100%;
+  bottom: -18px; /* 跟 top: calc(100% + 18px) 对应 */
   left: 0;
   width: 100%;
-  height: 10px; /* 鼠标经过这层不会消失 */
+  height: 18px;
+  background: transparent; /* 透明但可触发 hover */
+  z-index: 10;
 }
+
 </style>
 </head>
 
