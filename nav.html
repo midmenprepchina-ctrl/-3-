@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>导航示例</title>
+<title>导航菜单</title>
 <style>
 body {
   font-family: "Microsoft YaHei", sans-serif;
@@ -10,7 +10,6 @@ body {
   padding: 0;
 }
 
-/* 顶部导航栏 */
 .navbar {
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -19,7 +18,6 @@ body {
   padding: 10px 20px;
 }
 
-/* 每个菜单项 */
 .nav-item {
   position: relative;
   margin-right: 40px;
@@ -27,12 +25,11 @@ body {
   font-weight: 600;
 }
 
-/* 选中项样式 */
 .nav-item.active {
   color: #d32f2f;
 }
 
-/* 下拉菜单 */
+/* 一级下拉菜单 */
 .dropdown {
   display: none;
   position: absolute;
@@ -42,11 +39,23 @@ body {
   border: 1px solid #eee;
   box-shadow: 0 3px 8px rgba(0,0,0,0.05);
   border-radius: 5px;
-  min-width: 160px;
+  min-width: 180px;
   z-index: 10;
 }
 
-/* 下拉内容 */
+/* 二级菜单 */
+.sub-dropdown {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 180px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  min-width: 180px;
+}
+
+/* 链接样式 */
 .dropdown a {
   display: block;
   padding: 10px 15px;
@@ -55,11 +64,14 @@ body {
   font-weight: normal;
 }
 .dropdown a:hover {
-  background-color: #f5f5f5;
+  background-color: #f8f8f8;
 }
 
-/* hover 显示菜单 */
+/* hover 触发 */
 .nav-item:hover .dropdown {
+  display: block;
+}
+.dropdown-item:hover .sub-dropdown {
   display: block;
 }
 </style>
@@ -69,22 +81,27 @@ body {
   <div class="navbar">
     <div class="nav-item active">ChatGPT代升级服务
       <div class="dropdown">
-        <a href="#">GPT PLUS代升级</a>
-        <a href="#">API KEY代充值</a>
+        <div class="dropdown-item">
+          <a href="#">GPT PLUS代升级</a>
+          <div class="sub-dropdown">
+            <a href="plus-intro.html">PLUS介绍</a>
+            <a href="plus-tutorial.html">升级教程</a>
+            <a href="plus-faq.html">常见问题</a>
+          </div>
+        </div>
+        <div class="dropdown-item">
+          <a href="#">API KEY代充值</a>
+          <div class="sub-dropdown">
+            <a href="apikey-intro.html">API说明</a>
+            <a href="apikey-guide.html">充值流程</a>
+            <a href="apikey-error.html">常见错误</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="nav-item">ChatGPT 使用指南
-      <div class="dropdown">
-        <a href="#">如何注册</a>
-        <a href="#">如何充值</a>
-      </div>
-    </div>
-    <div class="nav-item">ChatGPT-4o生图API，免费测试
-      <div class="dropdown">
-        <a href="#">API申请</a>
-        <a href="#">使用教程</a>
-      </div>
-    </div>
+
+    <div class="nav-item">ChatGPT 使用指南</div>
+    <div class="nav-item">ChatGPT-4o生图API 免费测试</div>
   </div>
 </body>
 </html>
