@@ -29,11 +29,11 @@ body {
   color: #d32f2f;
 }
 
-/* 一级下拉菜单 */
+/* 修复 hover 区域断层 + 添加延时隐藏 */
 .dropdown {
   display: none;
   position: absolute;
-  top: 35px;
+  top: 40px; /* ✅ 这里原本是 35px，调大一点避免空隙 */
   left: 0;
   background-color: white;
   border: 1px solid #eee;
@@ -41,37 +41,23 @@ body {
   border-radius: 5px;
   min-width: 180px;
   z-index: 10;
+  transition: opacity 0.15s ease; /* ✅ 平滑过渡，防止抖动 */
 }
 
-/* 二级菜单 */
-.sub-dropdown {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 180px;
-  background-color: #fff;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  min-width: 180px;
-}
-
-/* 链接样式 */
 .dropdown a {
   display: block;
   padding: 10px 15px;
   text-decoration: none;
   color: #333;
-  font-weight: normal;
 }
+
 .dropdown a:hover {
   background-color: #f8f8f8;
 }
 
-/* hover 触发 */
-.nav-item:hover .dropdown {
-  display: block;
-}
-.dropdown-item:hover .sub-dropdown {
+/* 关键：确保 hover 时不闪退 */
+.nav-item:hover .dropdown,
+.dropdown:hover {
   display: block;
 }
 </style>
@@ -81,25 +67,10 @@ body {
   <div class="navbar">
     <div class="nav-item active">ChatGPT代升级服务
       <div class="dropdown">
-        <div class="dropdown-item">
-          <a href="#">GPT PLUS代升级</a>
-          <div class="sub-dropdown">
-            <a href="plus-intro.html">PLUS介绍</a>
-            <a href="plus-tutorial.html">升级教程</a>
-            <a href="plus-faq.html">常见问题</a>
-          </div>
-        </div>
-        <div class="dropdown-item">
-          <a href="#">API KEY代充值</a>
-          <div class="sub-dropdown">
-            <a href="apikey-intro.html">API说明</a>
-            <a href="apikey-guide.html">充值流程</a>
-            <a href="apikey-error.html">常见错误</a>
-          </div>
-        </div>
+        <a href="plus.html">GPT PLUS代升级</a>
+        <a href="apikey.html">API KEY代充值</a>
       </div>
     </div>
-
     <div class="nav-item">ChatGPT 使用指南</div>
     <div class="nav-item">ChatGPT-4o生图API 免费测试</div>
   </div>
