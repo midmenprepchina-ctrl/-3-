@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>导航示例</title>
+<style>
+body {
+  font-family: "Microsoft YaHei", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* 顶部导航栏 */
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+/* 每个菜单项 */
+.nav-item {
+  position: relative;
+  margin-right: 40px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* 选中项样式 */
+.nav-item.active {
+  color: #d32f2f;
+}
+
+/* 下拉菜单 */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 35px;
+  left: 0;
+  background-color: white;
+  border: 1px solid #eee;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  border-radius: 5px;
+  min-width: 160px;
+  z-index: 10;
+}
+
+/* 下拉内容 */
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: normal;
+}
+.dropdown a:hover {
+  background-color: #f5f5f5;
+}
+
+/* hover 显示菜单 */
+.nav-item:hover .dropdown {
+  display: block;
+}
+</style>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="nav-item active">ChatGPT代升级服务
+      <div class="dropdown">
+        <a href="#">GPT PLUS代升级</a>
+        <a href="#">API KEY代充值</a>
+      </div>
+    </div>
+    <div class="nav-item">ChatGPT 使用指南
+      <div class="dropdown">
+        <a href="#">如何注册</a>
+        <a href="#">如何充值</a>
+      </div>
+    </div>
+    <div class="nav-item">ChatGPT-4o生图API，免费测试
+      <div class="dropdown">
+        <a href="#">API申请</a>
+        <a href="#">使用教程</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
