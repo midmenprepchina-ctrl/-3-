@@ -46,6 +46,25 @@ body {
 }
 
 .nav-item {
+  /* ======== 修复当前页面下拉菜单在 active 时仍可显示 ======== */
+.nav-item:hover .dropdown,
+.nav-item.active:hover .dropdown,
+.dropdown:hover {
+  display: block !important;
+}
+
+/* 修复鼠标从文字滑向子菜单时的闪退问题 */
+.nav-item {
+  position: relative;
+  padding-bottom: 10px; /* 扩大 hover 区域，防止下拉闪退 */
+}
+
+/* 调整子菜单位置，使 hover 连接区域重叠 */
+.dropdown {
+  top: 42px !important; /* 保证与主菜单有重叠，防止闪烁 */
+  z-index: 1000;
+}
+
   position: relative;
   cursor: pointer;
 }
