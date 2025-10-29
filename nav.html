@@ -161,37 +161,4 @@
 </div>
 
 <!-- ✅ JS逻辑：延迟隐藏防闪退 -->
-<script>
-document.querySelectorAll('.nav-item').forEach(item => {
-  let timeout;
-  const dropdown = item.querySelector('.dropdown');
-  
-  // 鼠标移入主菜单
-  item.addEventListener('mouseenter', () => {
-    clearTimeout(timeout);
-    item.classList.add('show');
-  });
-
-  // 鼠标移出主菜单
-  item.addEventListener('mouseleave', () => {
-    timeout = setTimeout(() => {
-      item.classList.remove('show');
-    }, 250); // 延迟0.25秒隐藏
-  });
-
-  // 鼠标进入 dropdown
-  if (dropdown) {
-    dropdown.addEventListener('mouseenter', () => {
-      clearTimeout(timeout);
-      item.classList.add('show');
-    });
-    dropdown.addEventListener('mouseleave', () => {
-      timeout = setTimeout(() => {
-        item.classList.remove('show');
-      }, 250);
-    });
-  }
-});
-</script>
-console.log("✅ nav 脚本已加载");
-
+</div> <!-- 最后一行 -->
