@@ -1,4 +1,4 @@
-<!-- ✅ nav.html：绝对防闪退版本（CSS + JS 双保险） -->
+<!-- ✅ nav.html：完全防闪退 + 子菜单必显示 -->
 <style>
 .navbar {
   width: 100%;
@@ -28,7 +28,6 @@
   align-items: center;
   gap: 50px;
   font-size: 18px;
-  position: relative;
 }
 
 .nav-item {
@@ -42,6 +41,21 @@
   font-weight: 600;
   padding: 10px 0;
   display: inline-block;
+  cursor: pointer;
+}
+
+/* ===== 箭头动画 ===== */
+.arrow {
+  border: solid #D32F2F;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 4px;
+  margin-left: 6px;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+.nav-item.show .arrow {
+  transform: rotate(-135deg);
 }
 
 /* ===== 下拉菜单 ===== */
@@ -58,11 +72,11 @@
   opacity: 0;
   transform: translateY(10px);
   visibility: hidden;
-  transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
+  transition: all 0.25s ease;
 }
 
-/* ✅ 防闪退 hover 延迟逻辑（CSS层） */
+/* ✅ show 状态下强制显示 */
 .nav-item.show .dropdown {
   opacity: 1;
   transform: translateY(0);
@@ -70,7 +84,7 @@
   pointer-events: auto;
 }
 
-/* ===== 菜单项 ===== */
+/* ===== 菜单项样式 ===== */
 .dropdown a {
   display: block;
   padding: 12px 18px;
@@ -83,20 +97,6 @@
 .dropdown a:hover {
   background-color: #f7f7f7;
   color: #D32F2F;
-}
-
-/* ===== 箭头动画 ===== */
-.arrow {
-  border: solid #D32F2F;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 4px;
-  margin-left: 6px;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease;
-}
-.nav-item.show .arrow {
-  transform: rotate(-135deg);
 }
 
 /* ===== 搜索框 ===== */
@@ -134,7 +134,7 @@
 
   <div class="nav-links">
     <div class="nav-item">
-      <a href="#">ChatGPT代升级服务 <i class="arrow"></i></a>
+      <a>ChatGPT代升级服务 <i class="arrow"></i></a>
       <div class="dropdown">
         <a href="plus.html">GPT PLUS代升级</a>
         <a href="apikey.html">API KEY代充值</a>
@@ -142,7 +142,7 @@
     </div>
 
     <div class="nav-item">
-      <a href="#">ChatGPT 使用指南 <i class="arrow"></i></a>
+      <a>ChatGPT 使用指南 <i class="arrow"></i></a>
       <div class="dropdown">
         <a href="#">账号注册教程</a>
         <a href="#">支付失败解决</a>
@@ -150,7 +150,7 @@
     </div>
 
     <div class="nav-item">
-      <a href="#">ChatGPT-4o生图API，免费测试 <i class="arrow"></i></a>
+      <a href="#">ChatGPT-4o生图API，免费测试</a>
     </div>
   </div>
 
@@ -166,17 +166,20 @@ document.querySelectorAll('.nav-item').forEach(item => {
   let timeout;
   const dropdown = item.querySelector('.dropdown');
   
+  // 鼠标移入主菜单
   item.addEventListener('mouseenter', () => {
     clearTimeout(timeout);
     item.classList.add('show');
   });
 
+  // 鼠标移出主菜单
   item.addEventListener('mouseleave', () => {
     timeout = setTimeout(() => {
       item.classList.remove('show');
-    }, 200); // 延迟0.2秒隐藏
+    }, 250); // 延迟0.25秒隐藏
   });
 
+  // 鼠标进入 dropdown
   if (dropdown) {
     dropdown.addEventListener('mouseenter', () => {
       clearTimeout(timeout);
@@ -185,7 +188,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
     dropdown.addEventListener('mouseleave', () => {
       timeout = setTimeout(() => {
         item.classList.remove('show');
-      }, 200);
+      }, 250);
     });
   }
 });
