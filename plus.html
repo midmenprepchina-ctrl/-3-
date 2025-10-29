@@ -1,173 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>ChatGPT Plus代充与升级全攻略：官方充值方法、安全支付与稳定代付指南</title>
-  <meta name="description" content="ChatGPT Plus代充代升级服务，安全稳定正规充值长期包售后。本文详细介绍ChatGPT Plus充值方法、支付失败解决方案及安全代充指南，助您顺利开通GPT Plus服务。">
-  <meta name="keywords" content="ChatGPT Plus 代充, ChatGPT 升级, GPT Plus 充值, OpenAI 支付失败, ChatGPT 代付, OpenAI Plus, GPT4 升级">
-  <style>
-    body {
-      font-family: "Microsoft YaHei", sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fafafa;
-      color: #333;
-      line-height: 1.8;
-    }
-
-    /* 顶部横幅图片样式 */
-    .banner {
-      width: 100%;
-      height: auto;
-      display: block;
-      margin-top: 80px; /* 给导航留出空间 */
-      margin-bottom: 40px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    /* 页面正文 */
-    .main {
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    h1 {
-      color: #d32f2f;
-      border-bottom: 2px solid #d32f2f;
-      padding-bottom: 10px;
-    }
-
-    h2 {
-      color: #b71c1c;
-      margin-top: 40px;
-    }
-
-    p {
-      margin-bottom: 16px;
-    }
-
-    ol, ul {
-      margin-left: 20px;
-    }
-
-    a.back {
-      display: inline-block;
-      margin-top: 40px;
-      text-decoration: none;
-      color: #d32f2f;
-      font-weight: bold;
-    }
-
-    a.back:hover {
-      text-decoration: underline;
-    }
-
-    /* 面包屑样式 */
-    #breadcrumb {
-      font-size: 14px;
-      color: #666;
-      margin: 100px 60px 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Plus代充与升级全攻略：官方充值方法、安全支付与稳定代付指南</title>
+<style>
+body {
+  font-family: "Microsoft YaHei", sans-serif;
+  margin: 0;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.8;
+}
+.banner {
+  width: 100%;
+  display: block;
+  margin: 120px 0 40px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.main {
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+h1 { color: #d32f2f; border-bottom: 2px solid #d32f2f; padding-bottom: 10px; }
+h2 { color: #b71c1c; margin-top: 40px; }
+p { margin-bottom: 16px; }
+ol, ul { margin-left: 20px; }
+a.back { display: inline-block; margin-top: 40px; color: #d32f2f; text-decoration: none; font-weight: bold; }
+a.back:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
 
-  <!-- ✅ 导航加载 + 自动生成当前位置 -->
-  <div id="navbar"></div>
-  <div id="breadcrumb"></div>
+<!-- 导航加载 + 路径 -->
+<div id="navbar"></div>
+<div id="breadcrumb" style="font-size:14px;color:#666;margin:100px 60px 0;"></div>
 
-  <!-- ✅ 页面内容从这里开始 -->
-  <img src="images/banner-plus.jpg" class="banner" alt="ChatGPT Plus代充横幅">
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("nav.html?v=" + Date.now())
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("navbar").innerHTML = html;
+    });
 
-  <div class="main">
-    <h1>ChatGPT Plus代充与升级全攻略：官方充值方法、安全支付与稳定代付指南</h1>
+  const pageMap = {
+    "index.html": "首页",
+    "plus.html": "ChatGPT PLUS代充值代升级服务",
+    "apikey.html": "API KEY代充值",
+  };
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  const pageName = pageMap[path] || "未知页面";
+  document.getElementById("breadcrumb").innerHTML =
+    `🏠 当前位置：<a href="index.html" style="color:#d32f2f;text-decoration:none;">木子AI</a> » ChatGPT » ${pageName}`;
+});
+</script>
 
-    <p>想要开通ChatGPT Plus却总是支付失败？本篇详细解析充值方式、支付失败原因及安全的ChatGPT代充服务，帮你轻松完成升级。</p>
+<img src="images/banner-plus.jpg" alt="ChatGPT Plus代充横幅" class="banner">
 
-    <h2>一、ChatGPT Plus服务简介</h2>
-    <p>ChatGPT Plus 是 OpenAI 推出的高级会员服务，为用户提供更快的响应速度、更稳定的访问体验，并可优先体验最新模型（如 GPT-4o）。许多用户在升级时常遇到支付失败或信用卡限制问题，因此越来越多人选择安全可靠的代充方式来解决这些问题。</p>
+<div class="main">
+  <h1>ChatGPT Plus代充与升级全攻略</h1>
+  <p>（此处为你的文章内容）</p>
+  <a href="index.html" class="back">← 返回首页</a>
+</div>
 
-    <h2>二、ChatGPT Plus支持的支付方式</h2>
-    <p>目前，OpenAI 官方仅支持 <strong>美国发行的信用卡</strong> 进行 ChatGPT Plus 支付。</p>
-
-    <ul>
-      <li>美国发行的 Visa、MasterCard、American Express 信用卡</li>
-      <li>部分美国发行的借记卡</li>
-    </ul>
-
-    <h2>三、ChatGPT Plus价格与续费</h2>
-    <p>官方定价为 <strong>每月20美元</strong>，采用自动续费模式，每月从绑定信用卡扣款。目前不支持年付或其他优惠套餐。</p>
-
-    <h2>四、常见支付失败与解决方法</h2>
-    <h3>1. “Your card was declined”</h3>
-    <ol>
-      <li>使用美国信用卡或虚拟美元卡</li>
-      <li>确认卡内余额充足并启用国际支付</li>
-      <li>核对账单地址是否与卡片一致</li>
-      <li>联系发卡银行确认是否有限制</li>
-    </ol>
-
-    <h2>五、为什么选择ChatGPT代充？</h2>
-    <ul>
-      <li>解决地区与支付限制</li>
-      <li>支持支付宝、微信等本地化支付</li>
-      <li>高成功率、到账快</li>
-    </ul>
-
-    <h2>六、代充价格差异原因</h2>
-    <ul>
-      <li>美国银行卡获取与维护成本</li>
-      <li>汇率和跨境手续费</li>
-      <li>服务商运营与售后成本</li>
-    </ul>
-
-    <h2>七、如何选择安全可靠的代充服务</h2>
-    <ul>
-      <li>查看商家口碑与用户反馈</li>
-      <li>确保支付安全（HTTPS、官方二维码）</li>
-      <li>是否有售后与退款政策</li>
-    </ul>
-
-    <h2>八、ChatGPT代充操作流程</h2>
-    <ol>
-      <li>登录 ChatGPT 官网（<a href="https://chat.openai.com/" target="_blank">https://chat.openai.com/</a>）</li>
-      <li>点击“Upgrade to Plus”进入支付页面</li>
-      <li>复制以 <code>https://pay.openai.com/</code> 开头的支付链接</li>
-      <li>发送给代充客服</li>
-      <li>等待支付完成并确认会员状态</li>
-    </ol>
-
-    <h2>九、总结</h2>
-    <p>ChatGPT Plus 能显著提升使用体验，但支付门槛让不少用户困扰。无论是官方充值还是代充，都应选择安全、正规、稳定的方式。</p>
-
-    <a href="index.html" class="back">← 返回首页</a>
-  </div>
-
-  <!-- ✅ 把脚本放在页面最后，确保DOM加载完毕 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 导航加载
-      fetch("nav.html")
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("navbar").innerHTML = html;
-        });
-
-      // 面包屑自动生成
-      const pageMap = {
-        "index.html": "首页",
-        "plus.html": "ChatGPT PLUS代充值代升级服务",
-        "apikey.html": "API KEY代充值",
-      };
-
-      const path = window.location.pathname.split("/").pop() || "index.html";
-      const pageName = pageMap[path] || "未知页面";
-
-      document.getElementById("breadcrumb").innerHTML = `
-        🏠 当前位置：
-        <a href="index.html" style="color:#d3
+</body>
+</html>
