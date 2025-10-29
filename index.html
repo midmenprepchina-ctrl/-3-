@@ -11,7 +11,7 @@ body {
   background-color: #fafafa;
 }
 
-/* ===== 顶部导航栏 ===== */
+/* ===== 顶部导航栏样式（供 nav.html 使用） ===== */
 .navbar {
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -135,28 +135,13 @@ body {
 </head>
 <body>
 
-<!-- ===== 顶部导航栏 ===== -->
-<div class="navbar">
-  <div class="nav-item active">
-    ChatGPT代升级服务
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-    <div class="dropdown">
-      <a href="plus.html">GPT PLUS代升级</a>
-      <a href="apikey.html">API KEY代充值</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    <a href="guide.html" style="text-decoration:none;color:inherit;">ChatGPT 使用指南</a>
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-  </div>
-  <div class="nav-item">
-    <a href="api-test.html" style="text-decoration:none;color:inherit;">ChatGPT-4o生图API 免费测试</a>
-  </div>
-</div>
+<!-- ===== 自动加载统一导航栏 ===== -->
+<div id="nav-placeholder"></div>
+<script>
+  fetch("nav.html")
+    .then(res => res.text())
+    .then(data => document.getElementById("nav-placeholder").innerHTML = data);
+</script>
 
 <!-- ===== 横幅图片 ===== -->
 <img src="images/banner-plus.jpg" alt="ChatGPT Plus代充横幅" class="banner">
@@ -175,4 +160,3 @@ body {
 
 </body>
 </html>
-
