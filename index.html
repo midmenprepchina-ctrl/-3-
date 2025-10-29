@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ChatGPT 服务中心 - 官方代充、API代充值、使用指南</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
   font-family: "Microsoft YaHei", sans-serif;
@@ -11,7 +12,7 @@ body {
   background-color: #fafafa;
 }
 
-/* ===== 顶部导航栏样式（供 nav.html 使用） ===== */
+/* ===== 顶部导航栏 ===== */
 .navbar {
   background-color: #fff;
   border-bottom: 1px solid #eee;
@@ -36,7 +37,6 @@ body {
   color: #d32f2f;
 }
 
-/* ===== SVG箭头样式 ===== */
 .nav-item .arrow {
   width: 16px;
   height: 16px;
@@ -73,13 +73,12 @@ body {
   background-color: #f5f5f5;
 }
 
-/* ===== 悬停显示菜单 ===== */
 .nav-item:hover > .dropdown,
 .dropdown:hover {
   display: block;
 }
 
-/* ===== 防止闪退的缓冲区 ===== */
+/* ===== 防止闪退缓冲区 ===== */
 .nav-item::after {
   content: "";
   position: absolute;
@@ -99,7 +98,7 @@ body {
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* ===== 主体部分 ===== */
+/* ===== 主体 ===== */
 .main {
   max-width: 1000px;
   margin: 40px auto;
@@ -135,15 +134,35 @@ body {
 </head>
 <body>
 
-<!-- ===== 自动加载统一导航栏 ===== -->
-<div id="nav-placeholder"></div>
-<script>
-  fetch("nav.html")
-    .then(res => res.text())
-    .then(data => document.getElementById("nav-placeholder").innerHTML = data);
-</script>
+<!-- ===== 顶部导航栏 ===== -->
+<div class="navbar">
+  <div class="nav-item active">
+    ChatGPT代升级服务
+    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
+    <div class="dropdown">
+      <a href="plus.html">GPT PLUS代升级</a>
+      <a href="apikey.html">API KEY代充值</a>
+    </div>
+  </div>
+  <div class="nav-item">
+    ChatGPT 使用指南
+    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
+    <div class="dropdown">
+      <a href="guide.html">入门教程</a>
+      <a href="faq.html">常见问题</a>
+    </div>
+  </div>
+  <div class="nav-item">
+    ChatGPT-4o生图API，免费测试
+    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
+    <div class="dropdown">
+      <a href="api.html">API体验入口</a>
+      <a href="demo.html">示例展示</a>
+    </div>
+  </div>
+</div>
 
-<!-- ===== 横幅图片 ===== -->
+<!-- ===== 横幅 ===== -->
 <img src="images/banner-plus.jpg" alt="ChatGPT Plus代充横幅" class="banner">
 
 <!-- ===== 主体内容 ===== -->
