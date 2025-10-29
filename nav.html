@@ -94,18 +94,60 @@ body {
   border-color: #D32F2F;
 }
 
-/* ======== 下拉菜单 ======== */
+/* ======== 下拉菜单（防闪退优化版） ======== */
+.nav-item {
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 16px; /* 扩大 hover 区域 */
+}
+
 .dropdown {
   display: none;
   position: absolute;
-  top: 38px;
+  background: #fff;
+  top: 48px; /* 与主菜单 hover 区域稍重叠 */
   left: 0;
-  background-color: #fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-  border-radius: 6px;
-  min-width: 180px;
-  z-index: 999;
+  min-width: 200px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 8px 0;
+  z-index: 1000;
+  transition: opacity 0.15s ease;
 }
+
+/* 悬停主菜单或子菜单都保持展开 */
+.nav-item:hover .dropdown,
+.dropdown:hover {
+  display: block !important;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 子菜单项样式 */
+.dropdown a {
+  display: block;
+  padding: 10px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.dropdown a:hover {
+  background: #f5f5f5;
+}
+
+/* 防止 hover 区域断层（核心修复） */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: transparent;
+}
+
 
 .dropdown a {
   display: block;
