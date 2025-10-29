@@ -1,4 +1,4 @@
-<!-- ✅ 导航栏 nav.html -->
+<!-- ✅ nav.html：绝对防闪退版本（CSS + JS 双保险） -->
 <style>
 .navbar {
   width: 100%;
@@ -19,8 +19,8 @@
   font-size: 22px;
   font-weight: bold;
   color: #D32F2F;
-  cursor: pointer;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-links {
@@ -35,7 +35,7 @@
   position: relative;
 }
 
-/* ===== 主菜单样式 ===== */
+/* ===== 主菜单 ===== */
 .nav-item > a {
   text-decoration: none;
   color: #222;
@@ -44,7 +44,7 @@
   display: inline-block;
 }
 
-/* ===== 下拉菜单基础样式 ===== */
+/* ===== 下拉菜单 ===== */
 .dropdown {
   position: absolute;
   top: 48px;
@@ -57,30 +57,20 @@
   z-index: 10000;
   opacity: 0;
   transform: translateY(10px);
+  visibility: hidden;
   transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: none;
 }
 
-/* ✅ 防闪退关键逻辑 */
-.nav-item:hover .dropdown,
-.nav-item:focus-within .dropdown {
+/* ✅ 防闪退 hover 延迟逻辑（CSS层） */
+.nav-item.show .dropdown {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
   pointer-events: auto;
 }
 
-/* ✅ 鼠标离开菜单时延迟隐藏，防止闪退 */
-.nav-item {
-  --hide-delay: 200ms;
-}
-.nav-item:hover .dropdown {
-  transition-delay: 0s;
-}
-.nav-item:not(:hover) .dropdown {
-  transition-delay: var(--hide-delay);
-}
-
-/* ===== 子菜单项样式 ===== */
+/* ===== 菜单项 ===== */
 .dropdown a {
   display: block;
   padding: 12px 18px;
@@ -105,11 +95,11 @@
   transform: rotate(45deg);
   transition: transform 0.3s ease;
 }
-.nav-item:hover .arrow {
+.nav-item.show .arrow {
   transform: rotate(-135deg);
 }
 
-/* ===== 搜索框样式 ===== */
+/* ===== 搜索框 ===== */
 .search-box {
   position: relative;
 }
@@ -169,3 +159,34 @@
     <div class="icon">🔍</div>
   </div>
 </div>
+
+<!-- ✅ JS逻辑：延迟隐藏防闪退 -->
+<script>
+document.querySelectorAll('.nav-item').forEach(item => {
+  let timeout;
+  const dropdown = item.querySelector('.dropdown');
+  
+  item.addEventListener('mouseenter', () => {
+    clearTimeout(timeout);
+    item.classList.add('show');
+  });
+
+  item.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+      item.classList.remove('show');
+    }, 200); // 延迟0.2秒隐藏
+  });
+
+  if (dropdown) {
+    dropdown.addEventListener('mouseenter', () => {
+      clearTimeout(timeout);
+      item.classList.add('show');
+    });
+    dropdown.addEventListener('mouseleave', () => {
+      timeout = setTimeout(() => {
+        item.classList.remove('show');
+      }, 200);
+    });
+  }
+});
+</script>
