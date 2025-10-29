@@ -34,6 +34,15 @@ body {
   color: #d32f2f;
 }
 
+/* ===== 箭头部分 ===== */
+.nav-item .arrow {
+  font-size: 12px;
+  margin-left: 4px;
+  color: #d32f2f;
+  transition: transform 0.2s ease;
+}
+
+/* ===== 下拉菜单 ===== */
 .dropdown {
   display: none;
   position: absolute;
@@ -58,11 +67,18 @@ body {
   background-color: #f5f5f5;
 }
 
+/* ===== 悬停显示菜单 ===== */
 .nav-item:hover > .dropdown,
 .dropdown:hover {
   display: block;
 }
 
+/* ===== 箭头旋转效果 ===== */
+.nav-item:hover .arrow {
+  transform: rotate(180deg);
+}
+
+/* ===== 提高悬停区域，防止闪退 ===== */
 .nav-item::after {
   content: "";
   position: absolute;
@@ -120,14 +136,15 @@ body {
 
 <!-- ===== 顶部导航栏 ===== -->
 <div class="navbar">
-  <div class="nav-item active">ChatGPT代升级服务
+  <div class="nav-item active">
+    ChatGPT代升级服务 <span class="arrow">▾</span>
     <div class="dropdown">
       <a href="plus.html">GPT PLUS代升级</a>
       <a href="apikey.html">API KEY代充值</a>
     </div>
   </div>
-  <div class="nav-item">ChatGPT 使用指南</div>
-  <div class="nav-item">ChatGPT-4o生图API 免费测试</div>
+  <div class="nav-item"><a href="guide.html" style="text-decoration:none;color:inherit;">ChatGPT 使用指南</a></div>
+  <div class="nav-item"><a href="api-test.html" style="text-decoration:none;color:inherit;">ChatGPT-4o生图API 免费测试</a></div>
 </div>
 
 <!-- ===== 横幅图片 ===== -->
