@@ -99,6 +99,17 @@ fetch("nav.html")
   <p>（此处为你的文章内容）</p>
   <a href="index.html" class="back">← 返回首页</a>
 </div>
+  <script>
+  // 自动加载文章内容
+  fetch("plus-article.html")
+    .then(res => res.text())
+    .then(html => {
+      document.body.insertAdjacentHTML("beforeend", html);
+      console.log("✅ 文章已加载");
+    })
+    .catch(err => console.error("❌ 加载文章失败：", err));
+</script>
+
 
 </body>
 </html>
