@@ -1,329 +1,302 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI伴我行 · 导航</title>
-
-<style>
-/* ======== 全局样式 ======== */
-body {
-  margin: 0;
-  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-  background-color: #fff;
-}
-
-/* ======== 导航栏 ======== */
-.navbar {
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 60px;
-  box-sizing: border-box;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  color: #D32F2F;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* ======== 导航菜单 ======== */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  font-size: 18px;
-}
-
-.nav-item {
-  /* ======== 修复当前页面下拉菜单在 active 时仍可显示 ======== */
-.nav-item:hover .dropdown,
-.nav-item.active:hover .dropdown,
-.dropdown:hover {
-  display: block !important;
-}
-
-/* 修复鼠标从文字滑向子菜单时的闪退问题 */
-.nav-item {
-  position: relative;
-  padding-bottom: 10px; /* 扩大 hover 区域，防止下拉闪退 */
-}
-
-/* 调整子菜单位置，使 hover 连接区域重叠 */
-.dropdown {
-  top: 42px !important; /* 保证与主菜单有重叠，防止闪烁 */
-  z-index: 1000;
-}
-
-  position: relative;
-  cursor: pointer;
-}
-
-.nav-item > a {
-  text-decoration: none;
-  color: #222;
-  font-weight: 600;
-}
-
-.nav-item.red > a {
-  color: #D32F2F;
-}
-
-.nav-item .arrow {
-  border: solid #D32F2F;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 4px;
-  margin-left: 6px;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.nav-item:hover .arrow {
-  transform: rotate(-135deg);
-  border-color: #D32F2F;
-}
-
-/* ======== 下拉菜单（防闪退优化版） ======== */
-.nav-item {
-  position: relative;
-  cursor: pointer;
-  padding-bottom: 16px; /* 扩大 hover 区域 */
-}
-
-.dropdown {
-  display: none;
-  position: absolute;
-  background: #fff;
-  top: 48px; /* 与主菜单 hover 区域稍重叠 */
-  left: 0;
-  min-width: 200px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 8px 0;
-  z-index: 1000;
-  transition: opacity 0.15s ease;
-}
-
-/* 悬停主菜单或子菜单都保持展开 */
-.nav-item:hover .dropdown,
-.dropdown:hover {
-  display: block !important;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* 子菜单项样式 */
-.dropdown a {
-  display: block;
-  padding: 10px 20px;
-  color: #333;
-  text-decoration: none;
-  transition: background 0.2s ease;
-  white-space: nowrap;
-}
-
-.dropdown a:hover {
-  background: #f5f5f5;
-}
-
-/* 防止 hover 区域断层（核心修复） */
-.nav-item::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background: transparent;
-}
-
-
-.dropdown a {
-  display: block;
-  padding: 12px 18px;
-  color: #333;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.dropdown a:hover {
-  background-color: #f7f7f7;
-  color: #D32F2F;
-}
-
-.nav-item:hover .dropdown {
-  display: block;
-}
-
-/* ======== 搜索框 ======== */
-.search-box {
-  position: relative;
-}
-
-.search-box input {
-  width: 240px;
-  padding: 10px 40px 10px 15px;
-  border-radius: 25px;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
-  outline: none;
-  font-size: 15px;
-}
-
-.search-box .icon {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  background-color: #D32F2F;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-}
-
-/* ======== 路径导航 ======== */
-.breadcrumb {
-  margin-top: 90px;
-  padding: 10px 60px;
-  color: #888;
-  font-size: 15px;
-}
-
-.breadcrumb a {
-  color: #888;
-  text-decoration: none;
-}
-
-.breadcrumb a:hover {
-  color: #D32F2F;
-}
-
-/* ======== 微信浮动按钮 ======== */
-.wechat-btn {
-  position: fixed;
-  right: 40px;
-  bottom: 150px;
-  width: 58px;
-  height: 58px;
-  background-color: #22C55E;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  z-index: 2000;
-}
-
-.wechat-btn:hover {
-  transform: scale(1.1);
-}
-
-.wechat-btn img {
-  width: 32px;
-  height: 32px;
-}
-
-/* ======== 二维码浮层 ======== */
-.qrcode-popup {
-  position: fixed;
-  right: 120px; /* 浮层在按钮左边 */
-  bottom: 130px;
-  background-color: #fff;
-  padding: 10px 10px 5px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  text-align: center;
-  display: none;
-  z-index: 3000;
-  transition: opacity 0.3s ease;
-}
-
-.qrcode-popup img {
-  width: 180px;
-  height: 180px;
-  object-fit: contain; /* 防止变形 */
-}
-
-.qrcode-popup p {
-  font-size: 14px;
-  color: #333;
-  margin: 6px 0 5px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- ======== 顶部导航 ======== -->
-<div class="navbar">
-  <a href="index.html" class="logo">AI伴我行</a>
-
-  <div class="nav-links">
-    <div class="nav-item red">
-      <a href="#">ChatGPT代升级服务</a>
-      <i class="arrow"></i>
-      <div class="dropdown">
-        <a href="plus.html">GPT PLUS代升级</a>
-        <a href="#">API KEY代充值</a>
-      </div>
-    </div>
-    <div class="nav-item"><a href="#">ChatGPT使用指南</a></div>
-    <div class="nav-item"><a href="#">ChatGPT-4o生图API，免费测试</a></div>
-  </div>
-
-  <div class="search-box">
-    <input type="text" placeholder="请输入关键词">
-    <div class="icon">🔍</div>
-  </div>
-</div>
-
-<!-- ======== 路径导航 ======== -->
-<div class="breadcrumb">
-  当前位置： <a href="index.html">AI伴我行</a> » <a href="#">ChatGPT</a> » ChatGPT PLUS代充值代升级服务
-</div>
-
-<!-- ======== 微信悬浮按钮与二维码 ======== -->
-<div class="wechat-btn" id="wechatBtn">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/WeChat_icon.svg" alt="WeChat">
-</div>
-
-<div class="qrcode-popup" id="qrcodePopup">
-  <img src="images/wechat-qrcode.jpg" alt="微信二维码">
-  <p>扫码加微信：ef98ee</p>
-</div>
-
-<script>
-const wechatBtn = document.getElementById("wechatBtn");
-const qrcodePopup = document.getElementById("qrcodePopup");
-
-wechatBtn.addEventListener("mouseenter", () => {
-  qrcodePopup.style.display = "block";
-  qrcodePopup.style.opacity = "1";
-});
-
-wechatBtn.addEventListener("mouseleave", () => {
-  qrcodePopup.style.opacity = "0";
-  setTimeout(() => qrcodePopup.style.display = "none", 300);
-});
-</script>
-
-</body>
-</html>
+ 1. <!DOCTYPE html>
+ 2. <html lang="zh-CN">
+ 3. <head>
+ 4. <meta charset="UTF-8">
+ 5. <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 6. <title>AI伴我行 · 导航</title>
+ 7. 
+ 8. <style>
+ 9. /* ======== 全局样式 ======== */
+10. body {
+11.   margin: 0;
+12.   font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+13.   background-color: #fff;
+14. }
+15. 
+16. /* ======== 导航栏 ======== */
+17. .navbar {
+18.   width: 100%;
+19.   background-color: #fff;
+20.   border-bottom: 1px solid #eee;
+21.   position: fixed;
+22.   top: 0;
+23.   left: 0;
+24.   z-index: 1000;
+25.   display: flex;
+26.   align-items: center;
+27.   justify-content: space-between;
+28.   padding: 15px 60px;
+29.   box-sizing: border-box;
+30. }
+31. 
+32. .logo {
+33.   font-size: 22px;
+34.   font-weight: bold;
+35.   color: #D32F2F;
+36.   cursor: pointer;
+37.   text-decoration: none;
+38. }
+39. 
+40. /* ======== 导航菜单 ======== */
+41. .nav-links {
+42.   display: flex;
+43.   align-items: center;
+44.   gap: 50px;
+45.   font-size: 18px;
+46. }
+47. 
+48. .nav-item {
+49.   position: relative;
+50.   cursor: pointer;
+51.   padding-bottom: 12px; /* 扩大 hover 区域 */
+52. }
+53. 
+54. .nav-item:hover .dropdown,
+55. .nav-item.active:hover .dropdown,
+56. .dropdown:hover {
+57.   display: block !important;
+58. }
+59. 
+60. .dropdown {
+61.   top: 48px !important;
+62.   left: 0;
+63.   z-index: 1000;
+64. }
+65. 
+66. .nav-item > a {
+67.   text-decoration: none;
+68.   color: #222;
+69.   font-weight: 600;
+70. }
+71. 
+72. .nav-item.red > a {
+73.   color: #D32F2F;
+74. }
+75. 
+76. .nav-item .arrow {
+77.   border: solid #D32F2F;
+78.   border-width: 0 2px 2px 0;
+79.   display: inline-block;
+80.   padding: 4px;
+81.   margin-left: 6px;
+82.   transform: rotate(45deg);
+83.   transition: transform 0.3s ease, border-color 0.3s ease;
+84. }
+85. 
+86. .nav-item:hover .arrow {
+87.   transform: rotate(-135deg);
+88.   border-color: #D32F2F;
+89. }
+90. 
+91. /* ======== 下拉菜单（带淡入动画 + 防闪退） ======== */
+92. .dropdown {
+93.   display: none;
+94.   position: absolute;
+95.   background: #fff;
+96.   top: 48px;
+97.   left: 0;
+98.   min-width: 200px;
+99.   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+100.  border-radius: 10px;
+101.  padding: 8px 0;
+102.  z-index: 1000;
+103.  opacity: 0;
+104.  transform: translateY(5px); /* 初始轻微下移 */
+105.  transition: opacity 0.25s ease, transform 0.25s ease;
+106. }
+107. 
+108. .nav-item:hover .dropdown,
+109. .dropdown:hover {
+110.   display: block !important;
+111.   opacity: 1;
+112.   transform: translateY(0); /* 平滑上浮出现 */
+113.   pointer-events: auto;
+114. }
+115. 
+116. .dropdown a {
+117.   display: block;
+118.   padding: 12px 18px;
+119.   color: #333;
+120.   text-decoration: none;
+121.   font-size: 16px;
+122.   font-weight: 500;
+123.   transition: background 0.2s ease;
+124.   white-space: nowrap;
+125. }
+126. 
+127. .dropdown a:hover {
+128.   background-color: #f7f7f7;
+129.   color: #D32F2F;
+130. }
+131. 
+132. /* 防止 hover 区域断层（核心修复） */
+133. .nav-item::after {
+134.   content: "";
+135.   position: absolute;
+136.   bottom: -10px;
+137.   left: 0;
+138.   width: 100%;
+139.   height: 10px;
+140.   background: transparent;
+141. }
+142. 
+143. /* ======== 搜索框 ======== */
+144. .search-box {
+145.   position: relative;
+146. }
+147. 
+148. .search-box input {
+149.   width: 240px;
+150.   padding: 10px 40px 10px 15px;
+151.   border-radius: 25px;
+152.   border: 1px solid #ddd;
+153.   background-color: #f5f5f5;
+154.   outline: none;
+155.   font-size: 15px;
+156. }
+157. 
+158. .search-box .icon {
+159.   position: absolute;
+160.   right: 14px;
+161.   top: 50%;
+162.   transform: translateY(-50%);
+163.   color: white;
+164.   background-color: #D32F2F;
+165.   border-radius: 50%;
+166.   width: 22px;
+167.   height: 22px;
+168.   display: flex;
+169.   align-items: center;
+170.   justify-content: center;
+171.   font-size: 13px;
+172. }
+173. 
+174. /* ======== 路径导航 ======== */
+175. .breadcrumb {
+176.   margin-top: 90px;
+177.   padding: 10px 60px;
+178.   color: #888;
+179.   font-size: 15px;
+180. }
+181. 
+182. .breadcrumb a {
+183.   color: #888;
+184.   text-decoration: none;
+185. }
+186. 
+187. .breadcrumb a:hover {
+188.   color: #D32F2F;
+189. }
+190. 
+191. /* ======== 微信浮动按钮 ======== */
+192. .wechat-btn {
+193.   position: fixed;
+194.   right: 40px;
+195.   bottom: 150px;
+196.   width: 58px;
+197.   height: 58px;
+198.   background-color: #22C55E;
+199.   border-radius: 50%;
+200.   display: flex;
+201.   align-items: center;
+202.   justify-content: center;
+203.   cursor: pointer;
+204.   transition: transform 0.3s ease;
+205.   z-index: 2000;
+206. }
+207. 
+208. .wechat-btn:hover {
+209.   transform: scale(1.1);
+210. }
+211. 
+212. .wechat-btn img {
+213.   width: 32px;
+214.   height: 32px;
+215. }
+216. 
+217. /* ======== 二维码浮层 ======== */
+218. .qrcode-popup {
+219.   position: fixed;
+220.   right: 120px;
+221.   bottom: 130px;
+222.   background-color: #fff;
+223.   padding: 10px 10px 5px;
+224.   border-radius: 10px;
+225.   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+226.   text-align: center;
+227.   display: none;
+228.   z-index: 3000;
+229.   transition: opacity 0.3s ease;
+230. }
+231. 
+232. .qrcode-popup img {
+233.   width: 180px;
+234.   height: 180px;
+235.   object-fit: contain;
+236. }
+237. 
+238. .qrcode-popup p {
+239.   font-size: 14px;
+240.   color: #333;
+241.   margin: 6px 0 5px;
+242. }
+243. </style>
+244. </head>
+245. 
+246. <body>
+247. 
+248. <!-- ======== 顶部导航 ======== -->
+249. <div class="navbar">
+250.   <a href="index.html" class="logo">AI伴我行</a>
+251. 
+252.   <div class="nav-links">
+253.     <div class="nav-item red">
+254.       <a href="#">ChatGPT代升级服务</a>
+255.       <i class="arrow"></i>
+256.       <div class="dropdown">
+257.         <a href="plus.html">GPT PLUS代升级</a>
+258.         <a href="#">API KEY代充值</a>
+259.       </div>
+260.     </div>
+261.     <div class="nav-item"><a href="#">ChatGPT使用指南</a></div>
+262.     <div class="nav-item"><a href="#">ChatGPT-4o生图API，免费测试</a></div>
+263.   </div>
+264. 
+265.   <div class="search-box">
+266.     <input type="text" placeholder="请输入关键词">
+267.     <div class="icon">🔍</div>
+268.   </div>
+269. </div>
+270. 
+271. <!-- ======== 路径导航 ======== -->
+272. <div class="breadcrumb">
+273.   当前位置： <a href="index.html">AI伴我行</a> » <a href="#">ChatGPT</a> » ChatGPT PLUS代充值代升级服务
+274. </div>
+275. 
+276. <!-- ======== 微信悬浮按钮与二维码 ======== -->
+277. <div class="wechat-btn" id="wechatBtn">
+278.   <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/WeChat_icon.svg" alt="WeChat">
+279. </div>
+280. 
+281. <div class="qrcode-popup" id="qrcodePopup">
+282.   <img src="images/wechat-qrcode.jpg" alt="微信二维码">
+283.   <p>扫码加微信：ef98ee</p>
+284. </div>
+285. 
+286. <script>
+287. const wechatBtn = document.getElementById("wechatBtn");
+288. const qrcodePopup = document.getElementById("qrcodePopup");
+289. 
+290. wechatBtn.addEventListener("mouseenter", () => {
+291.   qrcodePopup.style.display = "block";
+292.   qrcodePopup.style.opacity = "1";
+293. });
+294. 
+295. wechatBtn.addEventListener("mouseleave", () => {
+296.   qrcodePopup.style.opacity = "0";
+297.   setTimeout(() => qrcodePopup.style.display = "none", 300);
+298. });
+299. </script>
+300. 
+301. </body>
+302. </html>
