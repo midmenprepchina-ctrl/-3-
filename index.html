@@ -1,181 +1,81 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>ChatGPT 服务中心 - 官方代充、API代充值、使用指南</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Microsoft YaHei", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #fafafa;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>木子AI｜ChatGPT Plus代充、API充值、AI工具导航</title>
+  <meta name="description" content="木子AI提供ChatGPT Plus代充值、API Key代充、安全稳定正规渠道，支持支付宝微信，助您轻松开通GPT4、Claude、Sora等AI服务。">
+  <meta name="keywords" content="ChatGPT Plus代充, GPT4代充值, API KEY, Sora邀请码, Claude Pro, OpenAI充值">
 
-/* ===== 顶部导航栏 ===== */
-.navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", sans-serif;
+      background-color: #fafafa;
+    }
 
-.nav-item {
-  position: relative;
-  margin-right: 40px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-}
+    /* ✅ 页面主要容器 */
+    .main {
+      padding: 120px 20px 60px;
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
 
-.nav-item.active {
-  color: #d32f2f;
-}
+    .main h1 {
+      color: #d32f2f;
+      font-size: 28px;
+    }
 
-.nav-item .arrow {
-  width: 16px;
-  height: 16px;
-  margin-left: 6px;
-  transition: transform 0.25s ease;
-}
+    .main p {
+      color: #555;
+      line-height: 1.8;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
 
-.nav-item:hover .arrow {
-  transform: rotate(180deg);
-}
-
-/* ===== 下拉菜单 ===== */
-.dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 0;
-  background-color: white;
-  border: 1px solid #eee;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  border-radius: 6px;
-  min-width: 180px;
-  z-index: 200;
-}
-
-.dropdown a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #333;
-}
-
-.dropdown a:hover {
-  background-color: #f5f5f5;
-}
-
-.nav-item:hover > .dropdown,
-.dropdown:hover {
-  display: block;
-}
-
-/* ===== 防止闪退缓冲区 ===== */
-.nav-item::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 10px;
-}
-
-/* ===== 横幅 ===== */
-.banner {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto 30px auto;
-  border-radius: 6px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-/* ===== 主体 ===== */
-.main {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px 30px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.main h1 {
-  color: #d32f2f;
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-.main p {
-  color: #333;
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-/* ===== 页脚 ===== */
-.footer {
-  background-color: #222;
-  color: #ccc;
-  text-align: center;
-  padding: 20px 10px;
-  margin-top: 40px;
-  font-size: 14px;
-}
-</style>
+    /* ✅ 顶部banner */
+    .banner {
+      width: 100%;
+      display: block;
+      margin-top: 70px;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ===== 顶部导航栏 ===== -->
-<div class="navbar">
-  <div class="nav-item active">
-    ChatGPT代升级服务
-    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
-    <div class="dropdown">
-      <a href="plus.html">GPT PLUS代升级</a>
-      <a href="apikey.html">API KEY代充值</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    ChatGPT 使用指南
-    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
-    <div class="dropdown">
-      <a href="guide.html">入门教程</a>
-      <a href="faq.html">常见问题</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    ChatGPT-4o生图API，免费测试
-    <svg class="arrow" viewBox="0 0 1024 1024"><path fill="currentColor" d="M512 672 192 352h640z"/></svg>
-    <div class="dropdown">
-      <a href="api.html">API体验入口</a>
-      <a href="demo.html">示例展示</a>
-    </div>
-  </div>
-</div>
+  <!-- ✅ 导航加载区 -->
+  <div id="navbar"></div>
 
-<!-- ===== 横幅 ===== -->
-<img src="images/banner-plus.jpg" alt="ChatGPT Plus代充横幅" class="banner">
+  <script>
+  // 加载导航栏（防止缓存 + 强制刷新）
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("nav.html?v=" + Date.now())
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+      });
+  });
+  </script>
 
-<!-- ===== 主体内容 ===== -->
-<div class="main">
-  <h1>欢迎来到 ChatGPT 服务中心</h1>
-  <p>我们提供 ChatGPT Plus 官方代充、OpenAI API Key 充值、以及详细使用教程。</p>
-  <p>点击上方菜单即可快速进入相应页面，解决支付问题、了解更多AI相关信息。</p>
-</div>
+  <!-- ✅ banner图片 -->
+  <img src="images/banner-plus.jpg" class="banner" alt="ChatGPT Plus代充横幅">
 
-<!-- ===== 页脚 ===== -->
-<div class="footer">
-  © 2025 ChatGPT 服务中心 | 联系微信：ef98ee
-</div>
+  <!-- ✅ 主体内容 -->
+  <div class="main">
+    <h1>木子AI · ChatGPT Plus代充全攻略</h1>
+    <p>
+      官方支付总失败？木子AI提供安全稳定的ChatGPT Plus代充值服务，<br>
+      支持支付宝、微信、虚拟卡通道，一次开通，长期包售后！
+    </p>
+    <p>
+      👇 点击上方导航栏查看更多服务：<br>
+      「GPT PLUS代升级」、「API KEY代充值」、「使用指南」、「免费图像API」等。
+    </p>
+  </div>
 
 </body>
 </html>
