@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatGPT Plus代充与升级全攻略</title>
+  <meta name="description" content="ChatGPT Plus官方代充攻略、支付失败解决方案与安全代付指南，教你轻松升级GPT4，支持支付宝微信支付。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 页面样式 -->
+  <style>
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 顶部导航 */
+    #navbar { width: 100%; }
+
+    /* 路径导航 */
+    #breadcrumb {
+      font-size: 14px;
+      color: #666;
+      margin: 90px 60px 0;
+    }
+    #breadcrumb a {
+      color: #d32f2f;
+      text-decoration: none;
+    }
+
+    /* 文章容器 */
+    .article {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 40px 50px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      line-height: 1.9;
+      font-size: 17px;
+      color: #333;
+    }
+
+    .article h1, .article h2, .article h3 {
+      color: #d32f2f;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    .article p {
+      text-indent: 2em;
+      margin: 16px 0;
+    }
+
+    .article ul, .article ol {
+      margin: 16px 0 16px 40px;
+    }
+
+    .article strong {
+      color: #d32f2f;
+    }
+
+    .article a.back {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    .article a.back:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 导航加载 -->
+  <div id="navbar"></div>
+
+  <!-- 自动路径导航 -->
+  <div id="breadcrumb"></div>
+  <script>
+    const pageMap = {
+      "index.html": "首页",
+      "plus-article.html": "ChatGPT PLUS代充值代升级服务",
+      "apikey.html": "API KEY代充值"
+    };
+    const path = window.location.pathname.split("/").pop() || "index.html";
+    const pageName = pageMap[path] || "当前页面";
+    document.getElementById("breadcrumb").innerHTML =
+      `🏠 当前位置：<a href="index.html">木子AI</a> » ChatGPT » ${pageName}`;
+  </script>
+
+  <!-- 正文内容 -->
+  <div class="article">
+    <h1>ChatGPT Plus代充与升级全攻略</h1>
+
+    <p>ChatGPT Plus 是 OpenAI 推出的高级订阅服务，带来更快的响应速度、更稳定的高峰期体验，以及优先使用最新功能的特权。</p>
+    <p>然而，许多用户在升级过程中遭遇了“银行卡被拒”“无法验证支付方式”等各种问题。本文将全面讲解 ChatGPT Plus 的官方充值流程、常见支付失败原因与解决方案，并教你如何选择安全可靠的代充渠道。</p>
+
+    <h2>💳 一、ChatGPT Plus 官方充值方式</h2>
+    <p>目前，OpenAI 官方仅支持美国地区发行的信用卡或借记卡。这是出于合规与反洗钱政策的考虑。以下卡种通常可用：</p>
+    <ul>
+      <li>🇺🇸 美国发行的 Visa / MasterCard / American Express</li>
+      <li>部分美国银行的借记卡</li>
+    </ul>
+    <p><strong>⚠️ 不支持：</strong> 中国发行信用卡、礼品卡、预付卡、PayPal、支付宝、微信支付、加密货币。</p>
+
+    <h2>💰 二、ChatGPT Plus 价格与续费规则</h2>
+    <p>价格：每月 $20 美元；续费：自动每月扣款（无年付选项）；优点：随时可取消或更换支付方式。</p>
+
+    <h2>🧩 三、常见支付失败原因与解决方案</h2>
+    <p><strong>1️⃣ “Your card was declined”</strong>：卡片不支持国际支付 / 信用额度不足 / 信息不匹配。</p>
+    <ul>
+      <li>使用美国发行信用卡</li>
+      <li>确认账单地址与卡片信息完全一致</li>
+      <li>检查卡片是否开通国际交易</li>
+    </ul>
+
+    <p><strong>2️⃣ “We were unable to verify your payment method”</strong>：IP或账户风控。</p>
+    <ul>
+      <li>使用美国 IP（VPN 需稳定节点）</li>
+      <li>更换信用卡重试</li>
+      <li>等待 24 小时后再试</li>
+    </ul>
+
+    <h2>🛡 四、如何选择安全代充</h2>
+    <p>选择有口碑、正规支付渠道、售后完善的代充商。避免明显低价或要求提供账户密码的服务，后者多为高风险卡源，可能导致封号。</p>
+
+    <h2>✨ 五、推荐服务</h2>
+    <ul>
+      <li>ChatGPT Plus 代升级</li>
+      <li>OpenAI API KEY 充值</li>
+      <li>Claude Pro 开通</li>
+    </ul>
+
+    <a href="index.html" class="back">← 返回首页</a>
+  </div>
+
+  <!-- 导航脚本加载 -->
+  <script>
+    fetch("nav.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("navbar").innerHTML = html;
+      });
+  </script>
+
+</body>
+</html>
