@@ -1,222 +1,72 @@
-<div id="navbar"></div>
-<script>
-fetch("nav.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("navbar").innerHTML = html;
-  });
-</script>
 <!DOCTYPE html>
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>OpenAI API KEY代充值服务 - 安全快速开通 | ChatGPT 服务中心</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAI API Key代充值与使用指南</title>
 <style>
 body {
   font-family: "Microsoft YaHei", sans-serif;
   margin: 0;
-  padding: 0;
   background-color: #fafafa;
-}
-
-/* ===== 顶部导航栏 ===== */
-.navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-
-.nav-item {
-  position: relative;
-  margin-right: 40px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-}
-
-.nav-item.active {
-  color: #d32f2f;
-}
-
-/* ===== SVG箭头样式（保持不变） ===== */
-.nav-item .arrow {
-  width: 16px;
-  height: 16px;
-  margin-left: 6px;
-  transition: transform 0.25s ease;
-}
-
-.nav-item:hover .arrow {
-  transform: rotate(180deg);
-}
-
-/* ===== 下拉菜单 ===== */
-.dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 0;
-  background-color: white;
-  border: 1px solid #eee;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  border-radius: 6px;
-  min-width: 180px;
-  z-index: 200;
-}
-
-.dropdown a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
   color: #333;
-}
-
-.dropdown a:hover {
-  background-color: #f5f5f5;
-}
-
-/* ===== 悬停显示菜单 ===== */
-.nav-item:hover > .dropdown,
-.dropdown:hover {
-  display: block;
-}
-
-/* ===== 防止闪退的缓冲区 ===== */
-.nav-item::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 10px;
-}
-
-/* ===== 面包屑导航 ===== */
-.breadcrumb {
-  background-color: #fff;
-  padding: 12px 20px;
-  font-size: 14px;
-  color: #666;
-  border-bottom: 1px solid #eee;
-}
-
-.breadcrumb a {
-  color: #d32f2f;
-  text-decoration: none;
-}
-
-.breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.breadcrumb span {
-  color: #999;
-}
-
-/* ===== 横幅 ===== */
-.banner {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto 30px auto;
-  border-radius: 6px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-/* ===== 主体部分 ===== */
-.main {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.main h1 {
-  color: #d32f2f;
-  font-size: 26px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.main p {
-  color: #333;
-  font-size: 16px;
   line-height: 1.8;
-  margin-bottom: 15px;
-  text-align: justify;
 }
-
-/* ===== 页脚 ===== */
-.footer {
-  background-color: #222;
-  color: #ccc;
-  text-align: center;
-  padding: 20px 10px;
-  margin-top: 40px;
-  font-size: 14px;
+.banner {
+  width: 100%;
+  display: block;
+  margin: 120px 0 40px 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.main {
+  padding: 40px;
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+h1 { color: #d32f2f; border-bottom: 2px solid #d32f2f; padding-bottom: 10px; }
+h2 { color: #b71c1c; margin-top: 40px; }
+p { margin-bottom: 16px; }
+ol, ul { margin-left: 20px; }
+a.back { display: inline-block; margin-top: 40px; color: #d32f2f; text-decoration: none; font-weight: bold; }
+a.back:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<!-- ===== 顶部导航栏 ===== -->
-<div class="navbar">
-  <div class="nav-item active">
-    ChatGPT代升级服务
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-    <div class="dropdown">
-      <a href="plus.html">GPT PLUS代升级</a>
-      <a href="apikey.html">API KEY代充值</a>
-    </div>
-  </div>
-  <div class="nav-item">
-    <a href="guide.html" style="text-decoration:none;color:inherit;">ChatGPT 使用指南</a>
-  </div>
-  <div class="nav-item">
-    <a href="api-test.html" style="text-decoration:none;color:inherit;">ChatGPT-4o生图API 免费测试</a>
-  </div>
-</div>
+<!-- 导航加载 + 路径 -->
+<div id="navbar"></div>
+<div id="breadcrumb" style="font-size:14px;color:#666;margin:100px 60px 0;"></div>
 
-<!-- ===== 面包屑导航（带点击跳转） ===== -->
-<div class="breadcrumb">
-  当前位置：
-  <a href="index.html">拼账号</a> »
-  <a href="guide.html">ChatGPT</a> »
-  <span>API KEY代充值服务，快速开通安全稳定</span>
-</div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("nav.html?v=" + Date.now())
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("navbar").innerHTML = html;
+    });
 
-<!-- ===== 横幅图片 ===== -->
-<img src="images/banner-plus.jpg" alt="ChatGPT API Key 代充值横幅" class="banner">
+  const pageMap = {
+    "index.html": "首页",
+    "plus.html": "ChatGPT PLUS代充值代升级服务",
+    "apikey.html": "API KEY代充值",
+  };
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  const pageName = pageMap[path] || "未知页面";
+  document.getElementById("breadcrumb").innerHTML =
+    `🏠 当前位置：<a href="index.html" style="color:#d32f2f;text-decoration:none;">木子AI</a> » ChatGPT » ${pageName}`;
+});
+</script>
 
-<!-- ===== 主体内容 ===== -->
+<img src="images/banner-plus.jpg" alt="API Key横幅" class="banner">
+
 <div class="main">
-  <h1>OpenAI API KEY 代充值 · 安全稳定开通</h1>
-  <p>我们为开发者和企业提供 <strong>OpenAI API KEY 官方代充值</strong> 服务，解决国内无法直接绑定信用卡充值的问题。</p>
-  <p>通过正规通道充值，支持支付宝、微信等方式，到账快、使用稳定，避免封号与风控风险。</p>
-  <p>本服务适用于调用 <strong>GPT-4、GPT-4o、Whisper、DALL·E、Sora</strong> 等 API 的用户，可自定义额度充值，长期有效。</p>
-  <p>充值完成后将为您提供独立账户或自用 KEY，可直接在 OpenAI 平台调用接口使用。</p>
-  <p>若您遇到账单暂停、支付受限、Key 无法使用等问题，我们提供 <strong>一对一技术支持</strong> 与后续售后保障。</p>
-  <p style="font-weight: bold; color: #d32f2f; text-align:center; margin: 30px 0;">
-    ⚡ 官方通道直充 · 安全可靠 · 秒到账！
-  </p>
-  <p style="text-align:center; font-size:20px; margin-top:20px;">
-    微信：<strong style="color:#d32f2f;">ef98ee</strong>
-  </p>
-</div>
-
-<!-- ===== 页脚 ===== -->
-<div class="footer">
-  © 2025 ChatGPT 服务中心 | 联系微信：ef98ee
+  <h1>OpenAI API Key代充值与使用指南</h1>
+  <p>（此处填写API Key代充值说明文字）</p>
+  <a href="index.html" class="back">← 返回首页</a>
 </div>
 
 </body>
