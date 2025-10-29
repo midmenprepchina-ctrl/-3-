@@ -28,18 +28,24 @@ body {
   margin-right: 40px;
   cursor: pointer;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
 .nav-item.active {
   color: #d32f2f;
 }
 
-/* ===== 箭头部分 ===== */
+/* ===== SVG箭头样式 ===== */
 .nav-item .arrow {
-  font-size: 12px;
-  margin-left: 4px;
-  color: #d32f2f;
-  transition: transform 0.2s ease;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  transition: transform 0.25s ease;
+}
+
+.nav-item:hover .arrow {
+  transform: rotate(180deg);
 }
 
 /* ===== 下拉菜单 ===== */
@@ -73,12 +79,7 @@ body {
   display: block;
 }
 
-/* ===== 箭头旋转效果 ===== */
-.nav-item:hover .arrow {
-  transform: rotate(180deg);
-}
-
-/* ===== 提高悬停区域，防止闪退 ===== */
+/* ===== 防止闪退的缓冲区 ===== */
 .nav-item::after {
   content: "";
   position: absolute;
@@ -137,14 +138,24 @@ body {
 <!-- ===== 顶部导航栏 ===== -->
 <div class="navbar">
   <div class="nav-item active">
-    ChatGPT代升级服务 <span class="arrow">▾</span>
+    ChatGPT代升级服务
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
     <div class="dropdown">
       <a href="plus.html">GPT PLUS代升级</a>
       <a href="apikey.html">API KEY代充值</a>
     </div>
   </div>
-  <div class="nav-item"><a href="guide.html" style="text-decoration:none;color:inherit;">ChatGPT 使用指南</a></div>
-  <div class="nav-item"><a href="api-test.html" style="text-decoration:none;color:inherit;">ChatGPT-4o生图API 免费测试</a></div>
+  <div class="nav-item">
+    <a href="guide.html" style="text-decoration:none;color:inherit;">ChatGPT 使用指南</a>
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </div>
+  <div class="nav-item">
+    <a href="api-test.html" style="text-decoration:none;color:inherit;">ChatGPT-4o生图API 免费测试</a>
+  </div>
 </div>
 
 <!-- ===== 横幅图片 ===== -->
@@ -164,3 +175,4 @@ body {
 
 </body>
 </html>
+
