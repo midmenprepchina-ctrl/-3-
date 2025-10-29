@@ -1,3 +1,11 @@
+<div id="navbar"></div>
+<script>
+fetch("nav.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar").innerHTML = html;
+  });
+</script>
 <h1>关于本站</h1>
 <p>这是我使用 GitHub Pages 搭建的第二个网页。</p>
 <p><a href="index.html">返回首页</a></p>
