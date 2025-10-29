@@ -1,12 +1,43 @@
-<div id="navbar"></div>
-<script>
-fetch("nav.html")
-  .then(res => res.text())
-  .then(html => {
-    document.getElementById("navbar").innerHTML = html;
-  });
-</script>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatGPT Plus代充与升级全攻略：官方充值方法、安全支付与稳定代付指南</title>
+  ...
+</head>
+<body>
 
+  <!-- ✅ 导航加载区 -->
+<!-- ✅ 导航加载 + 自动生成当前位置 -->
+<div id="navbar"></div>
+<div id="breadcrumb" style="font-size:14px;color:#666;margin:100px 60px 0;"></div>
+
+<script>
+  // 加载导航栏
+  fetch("nav.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("navbar").innerHTML = html;
+    });
+
+  // 自动生成当前位置
+  const pageMap = {
+    "index.html": "首页",
+    "plus.html": "ChatGPT PLUS代充值代升级服务",
+    "apikey.html": "API KEY代充值",
+  };
+
+  const path = window.location.pathname.split("/").pop() || "index.html";
+  const pageName = pageMap[path] || "未知页面";
+
+  document.getElementById("breadcrumb").innerHTML = `
+    🏠 当前位置：
+    <a href="index.html" style="color:#d32f2f;text-decoration:none;">木子AI</a>
+    » ChatGPT » ${pageName}
+  `;
+</script>
+  <!-- ✅ 页面内容从这里开始 -->
+  <img src="images/banner-plus.jpg" class="banner" alt="ChatGPT Plus代充横幅">
 <!DOCTYPE html>
 <html lang="zh">
 <head>
