@@ -53,11 +53,42 @@
   <script>
   // 加载导航栏（防止缓存 + 强制刷新）
   document.addEventListener("DOMContentLoaded", () => {
-    fetch("nav.html?v=" + Date.now())
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById("navbar").innerHTML = html;
+  fetch("nav.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar").innerHTML = html;
+    // ✅ 导航加载完成后再挂载交互逻辑
+    const script = document.createElement("script");
+    script.innerHTML = `
+      console.log("✅ nav 脚本已加载");
+      document.querySelectorAll('.nav-item').forEach(item => {
+        let timeout;
+        const dropdown = item.querySelector('.dropdown');
+        item.addEventListener('mouseenter', () => {
+          clearTimeout(timeout);
+          item.classList.add('show');
+        });
+        item.addEventListener('mouseleave', () => {
+          timeout = setTimeout(() => {
+            item.classList.remove('show');
+          }, 250);
+        });
+        if (dropdown) {
+          dropdown.addEventListener('mouseenter', () => {
+            clearTimeout(timeout);
+            item.classList.add('show');
+          });
+          dropdown.addEventListener('mouseleave', () => {
+            timeout = setTimeout(() => {
+              item.classList.remove('show');
+            }, 250);
+          });
+        }
       });
+    `;
+    document.body.appendChild(script);
+  });
+
   });
   </script>
 
