@@ -114,7 +114,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🟢 页面已加载，开始获取文章列表...");
 
-  fetch("https://midmenprepchina-ctrl.github.io/-3-/articles.json")
+  fetch("./articles.json")
     .then((response) => {
       console.log("🔵 JSON 响应状态:", response.status);
       return response.json();
