@@ -11,3 +11,113 @@ h1,h2,h3{color:#d32f2f;margin:18px 0}
 .list .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:18px;margin-bottom:16px}
 .list .card a{color:#222;text-decoration:none}
 .list .card a:hover{color:#d32f2f}
+/* ====== 顶部导航 ====== */
+.site-nav {
+  position: sticky; /* 固定在顶部 */
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.site-nav .nav-inner {
+  max-width: 1200px;            /* 导航横向宽度 */
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: grid;                 /* 左中右三栏 */
+  grid-template-columns: 220px 1fr 320px; 
+  gap: 16px;
+  align-items: center;
+}
+
+/* 左：LOGO */
+.logo { 
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.logo-text{
+  font-size: 26px;               /* 放大字体 */
+  font-weight: 800;
+  color: #D32F2F;
+  letter-spacing: .5px;
+  line-height: 1;
+}
+
+/* 中：主菜单 */
+.nav-center .menu{
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu > .menu-item > a{
+  color:#222;
+  text-decoration:none;
+  font-weight:600;
+  padding: 10px 0;
+  display:inline-block;
+}
+.menu > .menu-item > a:hover{ color:#D32F2F; }
+
+/* 下拉菜单 */
+.menu-item.has-sub{ position: relative; }
+.menu-item .submenu{
+  position:absolute;
+  left:0; top: 42px;
+  min-width: 220px;
+  background:#fff;
+  border:1px solid #eee;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+  border-radius:10px;
+  padding:8px 0;
+  list-style:none;
+  margin:0;
+  display:none;
+  z-index: 1001;
+}
+.menu-item .submenu a{
+  display:block;
+  padding:10px 16px;
+  color:#333;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.menu-item .submenu a:hover{ background:#f7f7f7; color:#D32F2F; }
+
+/* 悬停显示下拉（也可用 JS 控制 .show 类） */
+.menu-item.has-sub:hover .submenu{ display:block; }
+
+/* 右：搜索框 */
+.nav-right .search{
+  display:flex;
+  justify-content: flex-end;
+  gap:8px;
+}
+.nav-right .search input{
+  width: 100%;
+  max-width: 260px;             /* 右上角搜索框宽度 */
+  height: 38px;
+  padding: 0 12px;
+  border:1px solid #ddd;
+  background:#f5f5f5;
+  border-radius: 22px;
+  outline: none;
+  font-size: 14px;
+}
+.nav-right .search button{
+  height: 38px;
+  padding: 0 14px;
+  border:none;
+  border-radius: 20px;
+  background:#D32F2F;
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
+}
+.nav-right .search button:hover{ filter: brightness(0.95); }
+
+/* 让正文避开固定导航 */
+body{ scroll-padding-top: 70px; }
