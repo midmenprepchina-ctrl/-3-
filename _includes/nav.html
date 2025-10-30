@@ -1,18 +1,85 @@
 <style>
-.navbar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#fff;border-bottom:1px solid #eee;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:800;color:#D32F2F;text-decoration:none}
-.nav-links{display:flex;gap:28px}
-.nav-links a{color:#222;text-decoration:none;font-weight:600}
-body{margin:0;padding-top:64px}
+  /* 顶部导航整体 */
+  .navbar{
+    position:fixed; top:0; left:0; right:0;
+    z-index:9999;
+    background:#fff;
+    border-bottom:1px solid #eee;
+  }
+  /* 内部三栏布局：左(logo) 中(菜单) 右(搜索) */
+  .nav-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:12px 24px;
+    display:grid;
+    grid-template-columns: 220px 1fr 320px; /* 左中右 */
+    gap:16px;
+    align-items:center;
+  }
+
+  /* 左：LOGO（文字放大加粗、红色） */
+  .logo{ text-decoration:none; display:inline-flex; align-items:center; }
+  .logo-text{
+    font-weight:800;
+    font-size:26px;         /* 放大字号 */
+    color:#D32F2F;
+    letter-spacing:.5px;
+    line-height:1;
+  }
+
+  /* 中：主导航 */
+  .nav-links{
+    display:flex;
+    gap:32px;
+    align-items:center;
+    justify-content:flex-start;
+  }
+  .nav-links a{
+    color:#222; text-decoration:none; font-weight:600;
+    padding:10px 0; display:inline-block;
+  }
+  .nav-links a:hover{ color:#D32F2F; }
+
+  /* 右：搜索框 */
+  .nav-search{
+    display:flex; justify-content:flex-end; gap:8px;
+  }
+  .nav-search input{
+    width:100%; max-width:260px; height:38px;
+    padding:0 12px;
+    border:1px solid #ddd; background:#f5f5f5;
+    border-radius:22px; outline:none; font-size:14px;
+  }
+  .nav-search button{
+    height:38px; padding:0 14px;
+    border:none; border-radius:20px;
+    background:#D32F2F; color:#fff; cursor:pointer; font-weight:600;
+  }
+  .nav-search button:hover{ filter:brightness(.95); }
+
+  /* 让正文避开固定导航的高度 */
+  body{ margin:0; padding-top:64px; }
 </style>
 
 <nav class="navbar">
-<a class="logo" href="{{ site.baseurl }}/">
-  <span class="logo-text">木子AI</span>
-</a>
-  <div class="nav-links">
-    <a href="{{ site.baseurl }}/plus.html">GPT PLUS代升级</a>
-    <a href="{{ site.baseurl }}/apikey.html">API KEY代充值</a>
-    <a href="{{ site.baseurl }}/about.html">关于我们</a>
+  <div class="nav-inner">
+    <!-- 左：LOGO -->
+    <a class="logo" href="{{ site.baseurl }}/">
+      <span class="logo-text">木子AI</span>
+    </a>
+
+    <!-- 中：主菜单 -->
+    <div class="nav-links">
+      <a href="{{ site.baseurl }}/plus.html">GPT PLUS代升级</a>
+      <a href="{{ site.baseurl }}/apikey.html">API KEY代充值</a>
+      <a href="{{ site.baseurl }}/about.html">关于我们</a>
+    </div>
+
+    <!-- 右：搜索框（UI就绪；如果暂时没有搜索页也没关系） -->
+    <form class="nav-search" action="{{ site.baseurl }}/search.html" method="get" onsubmit="return true">
+      <input type="text" name="q" placeholder="请输入关键词">
+      <button type="submit">🔍</button>
+    </form>
   </div>
 </nav>
+
