@@ -1,0 +1,31 @@
+---
+layout: default
+title: 木子AI · 文章中心
+---
+
+<h1>📚 最新文章</h1>
+
+<div class="list">
+  {%- comment -%}
+    取出所有页面里，路径包含 "articles/" 的页面（这些就是你的文章）。
+    需要文章文件里带最小 Front-Matter 才会被识别为页面。
+  {%- endcomment -%}
+  {%- assign items = site.pages | where_exp: "p", "p.path contains 'articles/'" -%}
+  {%- assign items = items | sort: "date" | reverse -%}
+
+  {%- for p in items -%}
+    <div class="card">
+      <a href="{{ site.baseurl }}{{ p.url }}">
+        <h2>{{ p.title }}</h2>
+        <p class="article-meta">
+          {%- if p.date -%}📅 {{ p.date | date: "%Y-%m-%d" }} · {%- endif -%}
+          {{ p.excerpt | strip_html | truncate: 80 }}
+        </p>
+      </a>
+    </div>
+  {%- endfor -%}
+
+  {%- if items.size == 0 -%}
+    <p>还没有文章，请先在 <code>articles/</code> 文件夹添加一篇。</p>
+  {%- endif -%}
+</div>
