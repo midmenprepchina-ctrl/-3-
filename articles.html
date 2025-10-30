@@ -1,110 +1,143 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="UTF-8">
-<title>ChatGPT WildCard停服后怎么办？2025年最新安全充值方案</title>
-<meta name="description" content="WildCard停服后ChatGPT Plus无法充值？本文详细分析支付失败原因，对比4种替代方案，并提供安全充值思路。">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  font-family: "Microsoft YaHei", sans-serif;
-  background-color: #fafafa;
-  color: #333;
-  margin: 0;
-  padding: 0;
-  line-height: 1.8;
-}
-#navbar { width: 100%; position: sticky; top: 0; z-index: 100; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>木子AI · 文章中心</title>
+  <meta name="description" content="木子AI文章中心，汇集ChatGPT Plus代充、API充值、Sora视频生成、AI教程等最新资讯。">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", sans-serif;
+      background-color: #fafafa;
+      color: #333;
+    }
 
-/* 主体内容 */
-.article {
-  max-width: 900px;
-  background: #fff;
-  margin: 100px auto 60px;
-  padding: 40px 50px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
+    /* ✅ 固定导航栏 */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
 
-.article h1 {
-  color: #d32f2f;
-  font-size: 26px;
-  border-bottom: 2px solid #d32f2f;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
+    /* ✅ 页面主内容 */
+    .container {
+      max-width: 960px;
+      margin: 100px auto;
+      padding: 0 20px;
+    }
 
-.article h2 {
-  color: #b71c1c;
-  margin-top: 40px;
-  font-size: 22px;
-}
+    .page-title {
+      text-align: center;
+      color: #d32f2f;
+      font-size: 28px;
+      margin-bottom: 40px;
+      border-bottom: 2px solid #d32f2f;
+      padding-bottom: 10px;
+    }
 
-.article h3 {
-  color: #333;
-  margin-top: 25px;
-  font-size: 18px;
-}
+    /* ✅ 文章卡片样式 */
+    .article-card {
+      display: flex;
+      background: #fff;
+      margin-bottom: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.article p {
-  margin: 16px 0;
-  text-align: justify;
-}
+    .article-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
 
-.article ul, .article ol {
-  margin-left: 25px;
-}
+    .article-card img {
+      width: 180px;
+      height: 120px;
+      object-fit: cover;
+    }
 
-.article strong { color: #d32f2f; }
+    .article-content {
+      flex: 1;
+      padding: 20px;
+    }
 
-.article table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 20px 0;
-}
+    .article-content h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #d32f2f;
+    }
 
-.article th, .article td {
-  border: 1px solid #ccc;
-  padding: 8px 10px;
-  text-align: center;
-}
+    .article-content p {
+      margin: 0 0 10px;
+      color: #555;
+      line-height: 1.6;
+      font-size: 15px;
+    }
 
-.article th {
-  background-color: #f5f5f5;
-  color: #333;
-}
+    .meta {
+      font-size: 13px;
+      color: #888;
+    }
 
-.back {
-  display: inline-block;
-  margin-top: 30px;
-  color: #d32f2f;
-  text-decoration: none;
-  font-weight: bold;
-}
-.back:hover { text-decoration: underline; }
-</style>
+    a {
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ✅ 导航加载区 -->
+<!-- ✅ 导航加载区域 -->
 <div id="navbar"></div>
 
+<!-- ✅ 导航栏脚本 -->
 <script>
-// ✅ 加载顶部导航栏
-fetch("../nav.html")
+fetch("nav.html")
   .then(res => res.text())
   .then(html => {
     document.getElementById("navbar").innerHTML = html;
   });
 </script>
 
-<!-- ✅ 正文内容（保留你的整篇文章） -->
-<div class="article">
-  <h1>💥 ChatGPT WildCard停服后怎么办？2025年最新安全充值方案</h1>
-  <p><strong>WildCard 于 2025 年 7 月 12 日正式停服</strong>，数万 ChatGPT Plus 用户陷入充值困境。本文将深入分析支付失败原因，对比 <strong>4 种替代方案</strong> 的优缺点，并提供安全充值思路，帮助你快速恢复 ChatGPT Plus 服务。</p>
-  <!-- ...中间保持原内容不变... -->
-  <a href="../articles.html" class="back">← 返回文章列表</a>
+<!-- ✅ 主体内容容器 -->
+<div class="container">
+  <h1 class="page-title">📚 木子AI · 文章中心</h1>
+  <div id="article-list"></div>
 </div>
+
+<!-- ✅ 自动加载文章 JSON 并渲染卡片 -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🟢 开始加载文章列表...");
+
+  fetch("articles.json")
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById("article-list");
+
+      data.forEach(article => {
+        const card = document.createElement("div");
+        card.className = "article-card";
+        card.innerHTML = `
+          <a href="${article.link}">
+            <img src="${article.image || 'images/default.jpg'}" alt="${article.title}">
+          </a>
+          <div class="article-content">
+            <a href="${article.link}">
+              <h2>${article.title}</h2>
+              <p>${article.desc}</p>
+            </a>
+            <div class="meta">📅 ${article.date} · ✍️ ${article.author}</div>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    })
+    .catch(err => console.error("❌ 加载文章失败:", err));
+});
+</script>
 
 </body>
 </html>
