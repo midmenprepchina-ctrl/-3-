@@ -1,31 +1,84 @@
 ---
 layout: default
-title: 木子AI · 文章中心
+title: 木子AI · 首页
 ---
 
-<h1>📚 最新文章</h1>
+<div class="page shell">
+  <!-- 左侧主内容 -->
+  <main class="main">
+    <!-- 2×2 / 4列自适应的文章卡片网格（只取最新4篇） -->
+    <section class="grid-wrap">
+      <h2 class="block-title">📚 最新文章</h2>
+      <div class="article-grid">
+        {% assign all_articles = site.pages | where_exp: "p","p.path contains '/articles/'" | sort: "date" | reverse %}
+        {% for a in all_articles limit:4 %}
+          <article class="card">
+            <a class="thumb" href="{{ a.url | relative_url }}">
+              <img
+                src="{{ a.cover | default:'/images/default.jpg' | relative_url }}"
+                alt="{{ a.title | escape }}"
+                loading="lazy"
+              />
+            </a>
+            <div class="card-body">
+              <h3 class="card-title"><a href="{{ a.url | relative_url }}">{{ a.title }}</a></h3>
+              <p class="card-desc">
+                {{ a.excerpt | strip_html | truncate: 100 }}
+              </p>
+              <div class="meta">
+                <span class="meta-item">{{ a.date | date: "%Y-%m-%d" }}</span>
+                <span class="meta-dot">·</span>
+                <span class="meta-item">阅读({{ a.views | default: 0 }})</span>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
 
-<div class="list">
-  {%- comment -%}
-    取出所有页面里，路径包含 "articles/" 的页面（这些就是你的文章）。
-    需要文章文件里带最小 Front-Matter 才会被识别为页面。
-  {%- endcomment -%}
-  {%- assign items = site.pages | where_exp: "p", "p.path contains 'articles/'" -%}
-  {%- assign items = items | sort: "date" | reverse -%}
+    <!-- 单列长列表（从第5篇开始） -->
+    <section class="list-wrap">
+      {% for a in all_articles offset:4 %}
+        <article class="list-item">
+          <a class="list-thumb" href="{{ a.url | relative_url }}">
+            <img
+              src="{{ a.cover | default:'/images/default.jpg' | relative_url }}"
+              alt="{{ a.title | escape }}"
+              loading="lazy"
+            />
+          </a>
+          <div class="list-body">
+            <h3 class="list-title"><a href="{{ a.url | relative_url }}">{{ a.title }}</a></h3>
+            <p class="list-desc">{{ a.excerpt | strip_html | truncate: 140 }}</p>
+            <div class="meta">
+              <span class="meta-item">{{ a.date | date: "%Y-%m-%d" }}</span>
+              <span class="meta-dot">·</span>
+              <span class="meta-item">阅读({{ a.views | default: 0 }})</span>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  </main>
 
-  {%- for p in items -%}
-    <div class="card">
-      <a href="{{ site.baseurl }}{{ p.url }}">
-        <h2>{{ p.title }}</h2>
-        <p class="article-meta">
-          {%- if p.date -%}📅 {{ p.date | date: "%Y-%m-%d" }} · {%- endif -%}
-          {{ p.excerpt | strip_html | truncate: 80 }}
-        </p>
-      </a>
+  <!-- 右侧业务介绍栏（含微信悬浮按钮&二维码） -->
+  <aside class="sidebar">
+    <div class="card side-info">
+      <h3>关于本站</h3>
+      <p>专注于海外账号购买,ChatGPT Plus 充值 – 5分钟极速代充，最低价 159。</p>
+      <p>自助充值：<a href="https://fastgptplus.com" target="_blank" rel="noopener">fastgptplus.com</a></p>
+      <p>加微信：<ef98ee>ghj930213</strong></p>
     </div>
-  {%- endfor -%}
 
-  {%- if items.size == 0 -%}
-    <p>还没有文章，请先在 <code>articles/</code> 文件夹添加一篇。</p>
-  {%- endif -%}
+    <div class="wx-floating">
+      <!-- 按钮图标：放到 /images/wechat-icon.png（建议 120×120 的透明 PNG） -->
+      <img class="wx-btn" src="{{ '/images/wechat-icon.png' | relative_url }}" alt="微信联系"/>
+
+      <!-- 悬浮二维码：放到 /images/wechat-qr.png（建议 600×600 的高清 PNG） -->
+      <div class="wx-pop">
+        <img class="wx-qr" src="{{ '/images/wechat-qr.png' | relative_url }}" alt="扫码联系"/>
+        <div class="wx-tip">扫码联系</div>
+      </div>
+    </div>
+  </aside>
 </div>
