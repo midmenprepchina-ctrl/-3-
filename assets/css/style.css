@@ -1,0 +1,13 @@
+*{box-sizing:border-box}
+body{font-family:"Microsoft YaHei",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#fafafa;color:#333;line-height:1.8;margin:0}
+.container{max-width:980px;margin:40px auto;padding:0 16px}
+h1,h2,h3{color:#d32f2f;margin:18px 0}
+.article{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:28px}
+.article-title{margin-top:0}
+.article-meta{color:#999;margin-top:-8px}
+.article-content p{margin:14px 0;text-align:justify}
+.article-content img{max-width:100%;height:auto;border-radius:8px}
+.back a{color:#d32f2f;text-decoration:none;font-weight:700}
+.list .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:18px;margin-bottom:16px}
+.list .card a{color:#222;text-decoration:none}
+.list .card a:hover{color:#d32f2f}
