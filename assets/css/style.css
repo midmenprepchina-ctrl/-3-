@@ -121,6 +121,101 @@ h1,h2,h3{color:#d32f2f;margin:18px 0}
 
 /* 让正文避开固定导航 */
 body{ scroll-padding-top: 70px; }
+/* ========== ① 下拉菜单：悬停不闪退（配合 JS 延迟隐藏） ========== */
+.nav-item{position:relative}
+.nav-item .dropdown{
+  position:absolute; top:100%; left:0;
+  min-width:240px; background:#fff; border-radius:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+  padding:10px 0; opacity:0; visibility:hidden; transform:translateY(6px);
+  transition:opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+  pointer-events:none; z-index:10000;
+}
+.nav-item.show .dropdown{
+  opacity:1; visibility:visible; transform:translateY(0);
+  transition-delay:0s; pointer-events:auto;
+}
+/* 透明缓冲带，避免主项->下拉之间有“空隙”导致闪退 */
+.nav-item::after{content:""; position:absolute; left:0; right:0; top:100%; height:12px}
+
+/* ========== ② 首页：2×2/4列自适应的文章卡片网格 ========== */
+.page.shell{
+  display:grid;
+  grid-template-columns: minmax(0,1fr) 320px;  /* 主区 + 右侧栏 */
+  gap: 28px;
+  max-width: 1100px; margin: 32px auto; padding: 0 16px;
+}
+.main{min-width:0}
+.block-title{margin:6px 0 14px; font-size:18px; color:#d32f2f}
+
+.article-grid{
+  display:grid;
+  grid-template-columns: repeat( auto-fill, minmax(240px, 1fr) );
+  gap:16px;
+}
+.card{
+  background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06);
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.card .thumb{display:block; aspect-ratio: 16/10; background:#f4f4f4}
+.card .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.card-body{padding:14px 16px}
+.card-title{margin:0 0 6px; font-size:18px; line-height:1.35}
+.card-title a{color:#222; text-decoration:none}
+.card-title a:hover{color:#d32f2f}
+.card-desc{margin:0 0 10px; color:#555; font-size:14px; line-height:1.7}
+
+/* 灰色小字：发布日期 + 阅读量（与你截图一致的感觉） */
+.meta{font-size:13px; color:#8a8f98}
+.meta-dot{margin:0 6px; color:#c0c3c7}
+.meta-item{white-space:nowrap}
+
+/* ========== ③ 首页：单列长列表 ========== */
+.list-item{
+  display:flex; gap:14px; padding:14px 0; border-bottom:1px solid #eee
+}
+.list-thumb{flex:0 0 200px; border-radius:10px; overflow:hidden; background:#f5f5f5}
+.list-thumb img{width:100%; height:120px; object-fit:cover; display:block}
+.list-body{flex:1 1 auto; min-width:0}
+.list-title{margin:0 0 6px; font-size:20px}
+.list-title a{color:#222; text-decoration:none}
+.list-title a:hover{color:#d32f2f}
+.list-desc{margin:0 0 10px; color:#555; font-size:14px; line-height:1.8}
+
+/* ========== ④ 右侧栏 + 微信悬浮（高清不变形） ========== */
+.sidebar{position:relative}
+.card.side-info{
+  background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.06);
+  padding:16px; margin-bottom:16px; font-size:14px; color:#444; line-height:1.8
+}
+.card.side-info h3{margin:0 0 8px; color:#d32f2f}
+
+.wx-floating{
+  position:sticky; top:16px; /* 跟随右侧栏滚动 */
+  display:inline-block;
+}
+.wx-btn{
+  width:64px; height:64px; display:block;
+  border-radius:14px; box-shadow:0 4px 16px rgba(0,0,0,.08);
+  object-fit:contain; background:#fff; padding:8px;
+  border:1px solid #eee; cursor:pointer
+}
+.wx-pop{
+  position:absolute; right:80px; top:0;
+  background:#fff; padding:14px; border-radius:14px;
+  box-shadow:0 12px 28px rgba(0,0,0,.18);
+  width:280px;  /* 弹窗宽度固定，确保二维码不变形 */
+  opacity:0; visibility:hidden; transform:translateY(6px);
+  transition:opacity .15s ease, transform .15s ease;
+}
+.wx-qr{
+  width:100%; height:260px; display:block; object-fit:contain; /* 关键：高清不变形 */
+  border-radius:10px; background:#fafafa
+}
+.wx-tip{margin-top:6px; text-align:center; color:#6a6f76; font-size:13px}
+
+/* 悬停显示二维码（鼠标在按钮或弹层内都保持显示） */
+.wx-floating:hover .wx-pop{opacity:1; visibility:visible; transform:translateY(0)}
 
 
 
