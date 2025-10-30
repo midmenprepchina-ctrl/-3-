@@ -35,7 +35,7 @@ for file in os.listdir(ARTICLE_DIR):
             "tags": [],
             "desc": desc,
             "image": image,
-           "link": f"/-3-/articles/{file}"
+           "link": f"articles/{file}"
         }
         articles.append(article_data)
 
