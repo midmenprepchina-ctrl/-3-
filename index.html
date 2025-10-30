@@ -109,33 +109,44 @@
   </div>
 <!-- 自动加载文章列表 -->
 <script>
-fetch('https://midmenprepchina-ctrl.github.io/-3-/articles.json')
-  .then(response => response.json())
-  .then(data => {
-    const container = document.createElement('div');
-    container.id = 'article-list';
-    container.style.maxWidth = '800px';
-    container.style.margin = '40px auto';
-    container.style.fontFamily = 'Arial, sans-serif';
-    
-    data.forEach(article => {
-      const item = document.createElement('div');
-      item.style.borderBottom = '1px solid #eee';
-      item.style.padding = '20px 0';
-      item.innerHTML = `
-        <a href="${article.link}" style="text-decoration:none;color:#333;">
-          <h2>${article.title}</h2>
-          <p style="color:#666;">${article.desc}</p>
-          <small>${article.date} · ${article.author}</small>
-        </a>
-      `;
-      container.appendChild(item);
-    });
+<!-- 自动加载文章列表 -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("🟢 页面已加载，开始获取文章列表...");
 
-    document.body.appendChild(container);
-  })
-  .catch(err => console.error('❌ 加载文章失败:', err));
+  fetch("https://midmenprepchina-ctrl.github.io/-3-/articles.json")
+    .then((response) => {
+      console.log("🔵 JSON 响应状态:", response.status);
+      return response.json();
+    })
+    .then((data) => {
+      console.log("🟢 成功解析 JSON，共加载文章数:", data.length);
+      const container = document.createElement("div");
+      container.id = "article-list";
+      container.style.maxWidth = "800px";
+      container.style.margin = "40px auto";
+      container.style.fontFamily = "Microsoft YaHei, sans-serif";
+
+      data.forEach((article) => {
+        const item = document.createElement("div");
+        item.style.borderBottom = "1px solid #eee";
+        item.style.padding = "20px 0";
+        item.innerHTML = `
+          <a href="${article.link}" style="text-decoration:none;color:#333;">
+            <h2>${article.title}</h2>
+            <p style="color:#666;">${article.desc}</p>
+            <small>${article.date} · ${article.author}</small>
+          </a>
+        `;
+        container.appendChild(item);
+      });
+
+      document.body.appendChild(container);
+    })
+    .catch((err) => console.error("❌ 加载文章失败:", err));
+});
 </script>
+
 
 </body>
 </html>
