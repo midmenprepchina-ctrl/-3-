@@ -1,126 +1,103 @@
-<!-- _includes/nav.html  固定导航 + 下拉菜单 + 搜索框（左侧放放大镜图标） -->
 <style>
-  :root{
-    --brand:#D32F2F;
-    --text:#202733;
-    --muted:#7a8499;
-    --bg:#ffffff;
-    --pill:#f4f5f7;
-    --shadow:0 10px 30px rgba(15,23,42,.08);
-  }
+:root{
+  --nav-height:72px;
+  --brand:#D32F2F;
+  --text:#222;
+}
+*{box-sizing:border-box}
+body{margin:0; padding-top:var(--nav-height)}
 
-  /* 整体导航条 */
-  .navbar{
-    position:fixed; inset:0 0 auto 0; z-index:9999;
-    height:72px; background:var(--bg);
-    border-bottom:1px solid #eee;
-    display:flex; align-items:center; gap:28px;
-    padding:0 clamp(16px,4vw,48px);
-  }
-  /* 左侧：LOGO 文本（更大更醒目） */
-  .logo{
-    text-decoration:none; display:flex; align-items:center; gap:8px;
-    margin-right:8px;
-  }
-  .logo-text{
-    font-weight:900; letter-spacing:.5px;
-    color:var(--brand);
-    font-size: clamp(22px, 3.2vw, 28px);
-  }
+/* 顶部导航 */
+.navbar{
+  position:fixed; inset:0 0 auto 0; height:var(--nav-height);
+  z-index:9999; background:#fff; border-bottom:1px solid #eee;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 24px;
+}
 
-  /* 中间：主菜单，等分铺开 */
-  .nav-center{
-    flex:1 1 auto;
-    display:grid;
-    grid-auto-flow:column;
-    justify-content:space-evenly;
-    align-items:center;
-    gap:18px;
-    min-width: 520px;
-  }
-  .nav-item{
-    position:relative;
-  }
-  .nav-link{
-    display:inline-flex; align-items:center; gap:10px;
-    font-weight:800; letter-spacing:.3px;
-    text-decoration:none; color:var(--text);
-    font-size: clamp(18px, 2.1vw, 26px);  /* 主菜单更大 */
-    padding:10px 0;
-  }
-  .nav-link:hover{ color:var(--brand); }
+/* 左侧 LOGO（保持略大） */
+.logo{display:flex; align-items:center; text-decoration:none}
+.logo-text{
+  font-weight:800; color:var(--brand);
+  font-size:26px; line-height:1;
+}
 
-  /* 空心小箭头（更大更明显） */
-  .caret{
-    width:12px; height:12px;
-    border:2px solid currentColor; border-top:0; border-left:0;
-    transform: rotate(45deg); opacity:.85;
-    transition: transform .2s ease, opacity .2s ease;
-  }
-  .nav-item.open > .nav-link .caret{ transform: rotate(-135deg); opacity:1; }
+/* 中间主菜单：字体稍微变小 */
+.nav-center{
+  display:flex; align-items:center; gap:56px;
+}
 
-  /* 下拉菜单（不闪退）：父级保持 hover 时可见 */
-  .dropdown{
-    position:absolute; top:54px; left:0;
-    min-width: 280px; background:#fff; border-radius:14px;
-    box-shadow: var(--shadow);
-    padding:12px 6px;
-    opacity:0; visibility:hidden; transform:translateY(8px);
-    transition: .18s ease;
-    pointer-events:none;
-  }
-  .nav-item:hover .dropdown,
-  .nav-item.open  .dropdown{
-    opacity:1; visibility:visible; transform:translateY(0);
-    pointer-events:auto;
-  }
-  .dropdown a{
-    display:block; padding:14px 18px; border-radius:10px;
-    color:var(--text); text-decoration:none; font-size:18px; font-weight:700;
-  }
-  .dropdown a:hover{ background:#f8f8f8; color:var(--brand); }
+/* 主菜单链接（改小：18px） */
+.nav-link{
+  position:relative; display:flex; align-items:center; gap:8px;
+  color:var(--text); text-decoration:none; font-weight:700;
+  font-size:18px;  /* ← 这里从 20/22px 降到 18px */
+}
 
-  /* 右侧：搜索框（左侧放放大镜） */
-  .search{
-    flex:0 0 auto; display:flex; align-items:center; gap:10px;
-    background:var(--pill); border:1px solid #e5e7eb;
-    height:44px; padding:0 14px 0 46px;  /* 预留给左侧图标 */
-    border-radius:28px; position:relative;
-  }
-  .search input{
-    border:0; outline:0; background:transparent;
-    width:min(28vw, 320px); font-size:16px; color:var(--text);
-  }
-  .search-btn{
-    width:38px; height:38px; border-radius:50%;
-    border:0; background:var(--brand); cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition: transform .15s ease;
-  }
-  .search-btn:hover{ transform: translateY(-1px); }
+/* 空心小箭头（略大） */
+.caret{
+  display:inline-block; width:9px; height:9px;
+  border:2px solid currentColor; border-left:0; border-top:0;
+  transform:rotate(45deg); transition:transform .2s ease;
+  opacity:.9;
+}
 
-  /* 左侧放大镜（基于 SVG，稍大） */
-  .search-icon{
-    position:absolute; left:12px; top:50%; transform:translateY(-50%);
-    width:24px; height:24px; display:inline-flex;
-  }
-  .search-icon svg{ width:100%; height:100%; stroke:#263445; }
+/* 下拉菜单 */
+.dropdown{
+  position:absolute; top:calc(100% + 14px); left:0; min-width:260px;
+  background:#fff; border-radius:12px; box-shadow:0 10px 28px rgba(0,0,0,.12);
+  padding:10px 0; opacity:0; transform:translateY(10px);
+  pointer-events:none; visibility:hidden; transition:all .18s ease;
+}
+.dropdown a{
+  display:block; padding:12px 18px; color:#111; text-decoration:none;
+  font-weight:600; font-size:15.5px;  /* ← 子菜单更小一点 */
+}
+.dropdown a:hover{background:#f7f7f7; color:var(--brand)}
 
-  /* 页面内容为了不被顶掉：请在页面 CSS 里保持 padding-top≥72px */
-  body{ padding-top:72px; }
+/* 悬停防闪退区域 */
+.item{position:relative; padding:12px 0}
+.item:hover .dropdown{
+  opacity:1; transform:translateY(0); pointer-events:auto; visibility:visible;
+}
+.item:hover .caret{transform:rotate(-135deg)}
+
+/* 右侧搜索（图标在左、较大） */
+.search{
+  position:relative; width:360px; max-width:36vw;
+  display:flex; align-items:center;
+}
+.search input{
+  width:100%; height:44px; padding:0 16px 0 44px;
+  background:#f5f5f5; border:1px solid #e6e6e6; outline:0;
+  border-radius:999px; font-size:14.5px;
+}
+.search .icon{
+  position:absolute; left:14px; width:22px; height:22px; display:block;
+  color:#232a34;
+}
+
+/* 布局在窄屏时稍微紧凑 */
+@media (max-width:1100px){
+  .nav-center{gap:36px}
+  .nav-link{font-size:17px}
+  .dropdown{min-width:230px}
+}
 </style>
 
 <nav class="navbar">
+  <!-- 左侧 LOGO -->
+  <a class="logo" href="{{ site.baseurl }}/">
+    <span class="logo-text">木子AI</span>
+  </a>
 
-  <!-- 左：LOGO 文本 -->
-  <a class="logo" href="{{ site.baseurl }}/"><span class="logo-text">木子AI</span></a>
-
-  <!-- 中：主菜单（等距铺开） -->
+  <!-- 中间主菜单（等间距铺开） -->
   <div class="nav-center">
-    <!-- 1. ChatGPT代升级服务（有下拉） -->
-    <div class="nav-item" onmouseenter="this.classList.add('open')" onmouseleave="this.classList.remove('open')">
+
+    <!-- 1. ChatGPT代升级服务（含下拉） -->
+    <div class="item">
       <a class="nav-link" href="{{ site.baseurl }}/plus.html">
-        ChatGPT代升级服务 <i class="caret" aria-hidden="true"></i>
+        ChatGPT代升级服务 <i class="caret"></i>
       </a>
       <div class="dropdown">
         <a href="{{ site.baseurl }}/plus.html">GPT PLUS代升级</a>
@@ -128,41 +105,32 @@
       </div>
     </div>
 
-    <!-- 2. ChatGPT 使用指南（有下拉，可先放占位链接） -->
-    <div class="nav-item" onmouseenter="this.classList.add('open')" onmouseleave="this.classList.remove('open')">
+    <!-- 2. ChatGPT 使用指南（含下拉，子项可直达具体文章） -->
+    <div class="item">
       <a class="nav-link" href="{{ site.baseurl }}/articles.html">
-        ChatGPT 使用指南 <i class="caret" aria-hidden="true"></i>
+        ChatGPT 使用指南 <i class="caret"></i>
       </a>
       <div class="dropdown">
-        <a href="{{ site.baseurl }}/articles.html">账号注册教程</a>
-        <a href="{{ site.baseurl }}/articles.html">支付失败解决</a>
+        <a href="{{ site.baseurl }}/articles/iphone-download-chatgpt.html">账号注册教程</a>
+        <a href="{{ site.baseurl }}/articles/gpt-chong-zhi.html">支付失败解决</a>
       </div>
     </div>
 
-    <!-- 3. ChatGPT-4o生图API，免费测试（无下拉） -->
-    <div class="nav-item">
+    <!-- 3. ChatGPT-4o生图API，免费测试（可换你的专页） -->
+    <div class="item">
       <a class="nav-link" href="{{ site.baseurl }}/about.html">
-        ChatGPT-4o生图API，免费测试
+        ChatGPT-4o生图API， 免费测试
       </a>
     </div>
+
   </div>
 
-  <!-- 右：搜索（左侧有放大镜图标） -->
+  <!-- 右侧搜索（图标在输入框左侧，稍大） -->
   <form class="search" action="{{ site.baseurl }}/search.html" method="get">
-    <span class="search-icon" aria-hidden="true">
-      <!-- 粗一点的放大镜 SVG（接近你发的样式） -->
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="6.5"></circle>
-        <path d="M16.5 16.5 L21 21"></path>
-      </svg>
-    </span>
-    <input type="search" name="q" placeholder="请输入关键词" aria-label="搜索">
-    <button class="search-btn" type="submit" aria-label="搜索">
-      <!-- 白色的放大镜（按钮里） -->
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="6.5"></circle>
-        <path d="M16.5 16.5 L21 21"></path>
-      </svg>
-    </button>
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="2"></circle>
+      <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line>
+    </svg>
+    <input type="search" name="q" placeholder="请输入关键词">
   </form>
 </nav>
