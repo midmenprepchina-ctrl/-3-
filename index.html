@@ -107,6 +107,35 @@
       「GPT PLUS代升级」、「API KEY代充值」、「使用指南」、「免费图像API」等。
     </p>
   </div>
+<!-- 自动加载文章列表 -->
+<script>
+fetch('https://midmenprepchina-ctrl.github.io/-3-/articles.json')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.createElement('div');
+    container.id = 'article-list';
+    container.style.maxWidth = '800px';
+    container.style.margin = '40px auto';
+    container.style.fontFamily = 'Arial, sans-serif';
+    
+    data.forEach(article => {
+      const item = document.createElement('div');
+      item.style.borderBottom = '1px solid #eee';
+      item.style.padding = '20px 0';
+      item.innerHTML = `
+        <a href="${article.link}" style="text-decoration:none;color:#333;">
+          <h2>${article.title}</h2>
+          <p style="color:#666;">${article.desc}</p>
+          <small>${article.date} · ${article.author}</small>
+        </a>
+      `;
+      container.appendChild(item);
+    });
+
+    document.body.appendChild(container);
+  })
+  .catch(err => console.error('❌ 加载文章失败:', err));
+</script>
 
 </body>
 </html>
