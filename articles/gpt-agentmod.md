@@ -1,6 +1,9 @@
 ---
-title: Agent 模式来了：ChatGPT 正在从助手变成执行者
+layout: article
+title: "Agent 模式来了：ChatGPT 正在从助手变成执行者"
 date: 2025-10-30
+slug: "gpt-agentmod"
+thumb: "/images/atlas-thumb.jpg"
 ---
 2025 年，OpenAI 发布的“Agent Mode”代表了 AI 的第三次进化。
 这意味着 ChatGPT 不仅能“回答问题”，更能“执行任务”。
