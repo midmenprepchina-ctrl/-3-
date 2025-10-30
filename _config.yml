@@ -1,0 +1,19 @@
+# 站点基本信息（务必保持 baseurl 和你的仓库名一致）
+title: 木子AI
+url: https://midmenprepchina-ctrl.github.io
+baseurl: /-3-
+
+# 让 articles/ 下的页面默认用文章排版
+defaults:
+  - scope:
+      path: "articles"
+    values:
+      layout: article
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+# 生产环境静态资源路径前缀
+sass:
+  style: compressed
