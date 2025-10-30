@@ -82,3 +82,104 @@ title: 木子AI · 首页
     </div>
   </aside>
 </div>
+<!-- index.html -->
+---
+layout: default
+title: 首页
+---
+
+<div class="home-wrap container">
+  <div class="main-col">
+    <!-- 标题带小红条 -->
+    <section class="block">
+      <h2 class="block-title">ChatGPT使用必读文章</h2>
+
+      <!-- 四篇：卡片网格（左图右文 + 灰色小字） -->
+      <div class="grid-articles">
+        {% assign featured = site.articles | sort: 'date' | reverse | slice: 0, 4 %}
+        {% for a in featured %}
+        <a class="grid-card" href="{{ a.url | relative_url }}">
+          <img class="thumb" src="{{ a.thumb | default: '/images/default.jpg' | relative_url }}" alt="{{ a.title }}">
+          <div class="grid-body">
+            <h3 class="grid-title">{{ a.title }}</h3>
+            <p class="grid-meta">
+              <time>{{ a.date | date: "%Y-%m-%d" }}</time>
+              · <span class="views" data-key="{{ a.slug }}">阅读(--)</span>
+            </p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- 单列长列表 -->
+    <section class="list">
+      {% assign rest = site.articles | sort: 'date' | reverse | slice: 4, 100 %}
+      {% for a in rest %}
+      <a class="list-row" href="{{ a.url | relative_url }}">
+        <img class="list-thumb" src="{{ a.thumb | default: '/images/default.jpg' | relative_url }}" alt="{{ a.title }}">
+        <div class="list-body">
+          <h3 class="list-title">{{ a.title }}</h3>
+          <p class="list-meta">
+            <time>{{ a.date | date: "%Y-%m-%d" }}</time>
+            · <span class="views" data-key="{{ a.slug }}">阅读(--)</span>
+          </p>
+        </div>
+      </a>
+      {% endfor %}
+    </section>
+  </div>
+
+  <!-- 右侧侧栏 -->
+  <aside class="side-col">
+    <div class="side-card">
+      <h4>关于本站</h4>
+      <p>专注海外帐号购买、拼团。ChatGPT Plus 代充，5分钟到账，最低价 158。</p>
+      <p>自助充值：<a href="https://fastgptplus.com" target="_blank" rel="nofollow noopener">fastgptplus.com</a></p>
+      <p>加微信：<strong>ghj930213</strong></p>
+    </div>
+
+    <!-- 微信悬浮按钮（在侧栏中固定位置） -->
+    <div class="wx-fab" id="wxFab">
+      <img src="{{ '/images/wechat-icon.png' | relative_url }}" alt="微信" />
+      <div class="wx-pop" id="wxPop">
+        <img src="{{ '/images/wechat-qr.png' | relative_url }}" alt="微信二维码">
+        <div class="wx-caption">扫码联系</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- 首页批量读取各文章阅读量 -->
+<script>
+const NAMESPACE = 'midmen-3-counter'; // ← 与文章页一致
+(async () => {
+  try {
+    const nodes = document.querySelectorAll('.views[data-key]');
+    // 批量请求每篇文章的计数
+    for (const el of nodes) {
+      const key = el.getAttribute('data-key');
+      const url = `https://counterapi.dev/api/${NAMESPACE}/${key}`;
+      const res = await fetch(url, { cache: 'no-store' });
+      const json = await res.json();
+      const pv = json?.count ?? 0;
+      el.textContent = `阅读(${pv})`;
+    }
+  } catch (e) {
+    console.warn('读取阅读量失败', e);
+  }
+})();
+
+// 微信悬浮：hover 显示左侧弹层（高清且不变形）
+(() => {
+  const fab = document.getElementById('wxFab');
+  const pop = document.getElementById('wxPop');
+  let timer;
+  const show = () => { clearTimeout(timer); pop.classList.add('show'); };
+  const hide = () => { timer = setTimeout(() => pop.classList.remove('show'), 120); };
+  fab.addEventListener('mouseenter', show);
+  fab.addEventListener('mouseleave', hide);
+  pop.addEventListener('mouseenter', show);
+  pop.addEventListener('mouseleave', hide);
+})();
+</script>
