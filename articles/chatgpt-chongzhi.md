@@ -1,6 +1,9 @@
 ---
-title: OpenAI 全面解析：从 ChatGPT 到多模态智能时代
+layout: article
+title: "OpenAI 全面解析：从 ChatGPT 到多模态智能时代"
 date: 2025-10-30
+slug: "chatgpt-chongzhi"
+thumb: "/images/atlas-thumb.jpg"
 ---
 OpenAI 的崛起几乎代表了人工智能发展的全部方向。从 2015 年成立到 2025 年，短短十年间，这家公司不仅推动了自然语言处理的革命，更彻底改变了人们与计算机交互的方式。
 
