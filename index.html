@@ -1,84 +1,309 @@
 ---
-layout: default
-title: 木子AI · 首页
+# 这三行 front-matter 让 Jekyll 把它当首页处理；没有布局，所以我们写完整 HTML
+layout: null
 ---
 
-<div class="page shell">
-  <!-- 左侧主内容 -->
-  <main class="main">
-    <!-- 2×2 / 4列自适应的文章卡片网格（只取最新4篇） -->
-    <section class="grid-wrap">
-      <h2 class="block-title">📚 最新文章</h2>
-      <div class="article-grid">
-        {% assign all_articles = site.pages | where_exp: "p","p.path contains '/articles/'" | sort: "date" | reverse %}
-        {% for a in all_articles limit:4 %}
-          <article class="card">
-            <a class="thumb" href="{{ a.url | relative_url }}">
-              <img
-                src="{{ a.cover | default:'/images/default.jpg' | relative_url }}"
-                alt="{{ a.title | escape }}"
-                loading="lazy"
-              />
-            </a>
-            <div class="card-body">
-              <h3 class="card-title"><a href="{{ a.url | relative_url }}">{{ a.title }}</a></h3>
-              <p class="card-desc">
-                {{ a.excerpt | strip_html | truncate: 100 }}
-              </p>
-              <div class="meta">
-                <span class="meta-item">{{ a.date | date: "%Y-%m-%d" }}</span>
-                <span class="meta-dot">·</span>
-                <span class="meta-item">阅读({{ a.views | default: 0 }})</span>
-              </div>
-            </div>
-          </article>
-        {% endfor %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>木子AI｜ChatGPT Plus代充、API充值、AI工具导航</title>
+<meta name="description" content="木子AI提供ChatGPT Plus代充值、API Key代充、安全稳定正规渠道，支持支付宝微信，助您轻松开通GPT4、Claude、Sora等AI服务。" />
+
+<style>
+/* ============ Reset & 基础 ============ */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Microsoft YaHei",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#fafafa;color:#333;line-height:1.8}
+
+/* 容器与两栏布局 */
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+.main{display:grid;grid-template-columns:1fr 320px;gap:24px;margin-top:24px}
+@media (max-width: 1024px){ .main{grid-template-columns:1fr}}
+
+/* ============ 顶部导航（含搜索/下拉不闪退） ============ */
+.navbar{position:sticky;top:0;left:0;right:0;z-index:999;background:#fff;border-bottom:1px solid #eee}
+.navbar-in{display:grid;grid-template-columns:220px 1fr 320px;gap:24px;align-items:center;padding:14px 0}
+@media (max-width: 1024px){ .navbar-in{grid-template-columns:160px 1fr}}
+
+.logo{font-weight:900;color:#D32F2F;text-decoration:none;font-size:28px}
+.logo:hover{opacity:.9}
+
+/* 主菜单：字体稍微变小并均匀铺开 */
+.menu{display:flex;justify-content:center;gap:48px}
+.menu-item{position:relative}
+.menu-link{display:flex;align-items:center;gap:8px;text-decoration:none;color:#222;font-weight:800;
+  font-size:22px; /* ← 比之前小一点 */
+  letter-spacing:.5px}
+.menu-link:hover{color:#D32F2F}
+
+/* 空心小箭头 */
+.chev{display:inline-block;width:0;height:0;border:8px solid transparent;border-top-color:#30343F;
+  transform:translateY(2px)}
+.menu-item.show .chev{transform:translateY(2px) rotate(180deg)}
+
+/* 下拉（hover + 延迟隐藏防闪退） */
+.dropdown{position:absolute;top:44px;left:0;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);
+  min-width:260px;opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .18s ease,transform .18s ease,visibility .18s ease;padding:10px 0;pointer-events:none}
+.menu-item.show .dropdown{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.dropdown a{display:block;padding:14px 18px;text-decoration:none;color:#222;font-size:18px}
+.dropdown a:hover{background:#f7f7f7;color:#D32F2F}
+
+/* 搜索框（左侧放大镜） */
+.search{display:flex;align-items:center;gap:12px;justify-content:flex-end}
+.search-wrap{position:relative;flex:0 0 320px}
+.search-input{width:100%;height:44px;border-radius:24px;border:1px solid #e5e5e5;background:#f4f4f4;
+  padding:0 16px 0 44px;outline:none;font-size:16px}
+.search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:22px;height:22px}
+.search-ico:before{content:"";display:block;width:22px;height:22px;border:3px solid #2A3240;border-radius:50%}
+.search-ico:after{content:"";display:block;width:14px;height:3px;background:#2A3240;border-radius:2px;
+  position:absolute;right:-6px;bottom:1px;transform:rotate(45deg)}
+
+/* ============ 标题区 ============ */
+.block-title{display:flex;align-items:center;gap:12px;margin:18px 0 8px}
+.block-title i{width:6px;height:24px;background:#D32F2F;border-radius:3px}
+.block-title h2{margin:0;color:#D32F2F;font-size:28px}
+
+/* ============ 4 卡片网格（左图右文） ============ */
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:18px;background:#fff;border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);padding:18px}
+@media (max-width: 900px){ .grid4{grid-template-columns:1fr}}
+
+.card-h{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:center;border-bottom:1px solid #f0f0f0;padding:10px 0}
+.card-h:last-child{border-bottom:none}
+.card-thumb{width:160px;height:100px;border-radius:10px;object-fit:cover;background:#f3f3f3}
+.card-title{margin:0 0 8px 0;font-size:20px;line-height:1.5;color:#222}
+.card-title a{color:#222;text-decoration:none}
+.card-title a:hover{color:#D32F2F}
+.meta{color:#9aa0a6;font-size:14px}
+
+/* ============ 长列表（一篇一篇） ============ */
+.list{margin-top:20px}
+.post{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:18px;margin-bottom:16px}
+.post h3{margin:4px 0 6px 0;font-size:24px}
+.post h3 a{text-decoration:none;color:#111}
+.post h3 a:hover{color:#D32F2F}
+.post p{margin:8px 0 0 0;color:#555}
+.post .meta{margin-top:6px}
+
+/* ============ 右侧业务介绍 ============ */
+.sidebar{position:sticky;top:78px}
+.side-box{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:18px}
+.side-box h3{margin:0 0 12px 0}
+
+/* ============ 右侧微信悬浮图标 + 二维码 ============ */
+.wx-fab{position:fixed;right:24px;bottom:24px;width:64px;height:64px;border-radius:14px;background:#fff;
+  border:1px solid #e5e5e5;box-shadow:0 8px 24px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:999}
+.wx-fab img{width:40px;height:40px;object-fit:contain}
+.wx-qr{position:fixed;right:96px;bottom:24px;width:340px;background:#fff;border-radius:16px;box-shadow:0 16px 36px rgba(0,0,0,.18);
+  padding:18px 18px 6px 18px;display:none}
+.wx-qr.show{display:block}
+.wx-qr h4{margin:0 0 10px 0}
+.wx-qr img{width:100%;height:auto;object-fit:contain;border-radius:10px}
+
+/* 链接统一色 */
+a{color:#1a73e8}
+a:hover{color:#D32F2F}
+</style>
+</head>
+<body>
+
+<!-- ============ 顶部导航（含菜单/下拉/搜索） ============ -->
+<header class="navbar">
+  <div class="wrap navbar-in">
+    <a class="logo" href="{{ '/' | relative_url }}">木子AI</a>
+
+    <nav class="menu" id="topMenu">
+      <!-- 1. ChatGPT代升级服务（有下拉） -->
+      <div class="menu-item" data-dd="dd1">
+        <a href="javascript:void(0)" class="menu-link">ChatGPT代升级服务<span class="chev"></span></a>
+        <div class="dropdown" id="dd1">
+          <a href="{{ '/plus.html'   | relative_url }}">GPT PLUS代升级</a>
+          <a href="{{ '/apikey.html' | relative_url }}">API KEY代充值</a>
+        </div>
       </div>
-    </section>
 
-    <!-- 单列长列表（从第5篇开始） -->
-    <section class="list-wrap">
-      {% for a in all_articles offset:4 %}
-        <article class="list-item">
-          <a class="list-thumb" href="{{ a.url | relative_url }}">
-            <img
-              src="{{ a.cover | default:'/images/default.jpg' | relative_url }}"
-              alt="{{ a.title | escape }}"
-              loading="lazy"
-            />
-          </a>
-          <div class="list-body">
-            <h3 class="list-title"><a href="{{ a.url | relative_url }}">{{ a.title }}</a></h3>
-            <p class="list-desc">{{ a.excerpt | strip_html | truncate: 140 }}</p>
-            <div class="meta">
-              <span class="meta-item">{{ a.date | date: "%Y-%m-%d" }}</span>
-              <span class="meta-dot">·</span>
-              <span class="meta-item">阅读({{ a.views | default: 0 }})</span>
-            </div>
+      <!-- 2. ChatGPT 使用指南（有下拉，可自己补项） -->
+      <div class="menu-item" data-dd="dd2">
+        <a href="javascript:void(0)" class="menu-link">ChatGPT 使用指南<span class="chev"></span></a>
+        <div class="dropdown" id="dd2">
+          <a href="{{ '/articles.html' | relative_url }}">文章中心</a>
+          <a href="{{ '/about.html'    | relative_url }}">关于我们</a>
+        </div>
+      </div>
+
+      <!-- 3. ChatGPT-4o生图API，免费测试（演示入口） -->
+      <div class="menu-item">
+        <a href="{{ '/api-demo.html' | relative_url }}" class="menu-link">ChatGPT-4o生图API，免费测试</a>
+      </div>
+    </nav>
+
+    <div class="search">
+      <div class="search-wrap">
+        <i class="search-ico"></i>
+        <input class="search-input" type="search" placeholder="请输入关键词" onkeydown="if(event.key==='Enter'){siteSearch(this.value)}" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 主体 ============ -->
+<main class="wrap main">
+
+  <!-- ============ 左侧内容区 ============ -->
+  <section>
+    <!-- 必读文章：4 卡片（左图右文） -->
+    <div class="block-title"><i></i><h2>ChatGPT使用必读文章</h2></div>
+    {% assign all = site.articles | sort: 'date' | reverse %}
+    {% assign top4 = all | slice: 0, 4 %}
+    <div class="grid4">
+      {% for p in top4 %}
+      <article class="card-h">
+        {% if p.thumb %}
+          <a href="{{ p.url | relative_url }}"><img class="card-thumb" loading="lazy" src="{{ p.thumb | relative_url }}" alt="{{ p.title | escape }}"></a>
+        {% else %}
+          <a href="{{ p.url | relative_url }}"><img class="card-thumb" loading="lazy" src="{{ '/images/default.jpg' | relative_url }}" alt="{{ p.title | escape }}"></a>
+        {% endif %}
+
+        <div>
+          <h3 class="card-title"><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+          <div class="meta">
+            <span class="date">{{ p.date | date: "%Y-%m-%d" }}</span>
+            <span> · </span>
+            <span class="views" data-slug="{{ p.slug | default: p.name | replace:'.md','' }}">读取中…</span>
           </div>
-        </article>
+        </div>
+      </article>
       {% endfor %}
-    </section>
-  </main>
-
-  <!-- 右侧业务介绍栏（含微信悬浮按钮&二维码） -->
-  <aside class="sidebar">
-    <div class="card side-info">
-      <h3>关于本站</h3>
-      <p>专注于海外账号购买,ChatGPT Plus 充值 – 5分钟极速代充，最低价 159。</p>
-      <p>自助充值：<a href="https://fastgptplus.com" target="_blank" rel="noopener">fastgptplus.com</a></p>
-      <p>加微信：<ef98ee>ghj930213</strong></p>
     </div>
 
-    <div class="wx-floating">
-      <!-- 按钮图标：放到 /images/wechat-icon.png（建议 120×120 的透明 PNG） -->
-      <img class="wx-btn" src="{{ '/images/wechat-icon.png' | relative_url }}" alt="微信联系"/>
+    <!-- 长列表（从第5篇开始） -->
+    <div class="list">
+      {% assign rest = all | slice: 4, 1000 %}
+      {% for p in rest %}
+      <article class="post">
+        <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        <p>
+          {% if p.excerpt %}
+            {{ p.excerpt | strip_html | truncate: 120 }}
+          {% else %}
+            {{ p.content | strip_html | truncate: 120 }}
+          {% endif %}
+        </p>
+        <div class="meta">
+          <span class="date">{{ p.date | date: "%Y-%m-%d" }}</span>
+          <span> · </span>
+          <span class="views" data-slug="{{ p.slug | default: p.name | replace:'.md','' }}">读取中…</span>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
 
-      <!-- 悬浮二维码：放到 /images/wechat-qr.png（建议 600×600 的高清 PNG） -->
-      <div class="wx-pop">
-        <img class="wx-qr" src="{{ '/images/wechat-qr.png' | relative_url }}" alt="扫码联系"/>
-        <div class="wx-tip">扫码联系</div>
-      </div>
+  <!-- ============ 右侧业务介绍 ============ -->
+  <aside class="sidebar">
+    <div class="side-box">
+      <h3>关于本站</h3>
+      <p>专注于海外账号购买、拼团。ChatGPT Plus 代充 —— <strong>5分钟</strong> 快速代充，最低价 <strong>158</strong>。</p>
+      <p>点此自助充值：<a href="https://fastgptplus.com" target="_blank" rel="nofollow">https://fastgptplus.com/</a></p>
+      <p>laozhang.ai：注册就送 <strong>$1</strong>，Claude 3.7、DeepSeek r1、Grok3、GPT-4o 生图全支持。</p>
+      <p>加老张微信：<strong>ghj930213</strong></p>
     </div>
   </aside>
+</main>
+
+<!-- 右下角微信悬浮按钮 + 左侧弹出二维码 -->
+<div class="wx-fab" id="wxFab" aria-label="微信联系">
+  <img src="{{ '/images/wechat-icon.png' | relative_url }}" alt="微信">
 </div>
+<div class="wx-qr" id="wxQR" aria-hidden="true">
+  <h4>扫码联系</h4>
+  <img src="{{ '/images/wechat-qr.png' | relative_url }}" alt="微信二维码">
+</div>
+
+<!-- ============ 行为脚本：菜单防闪退 / 搜索 / 阅读量统计 / 微信二维码弹出 ============ -->
+<script>
+/** —— 顶部菜单：延迟隐藏，防“闪退” —— */
+(function(){
+  const menu = document.getElementById('topMenu');
+  let hideTimer = null;
+
+  function showDD(item){
+    clearTimeout(hideTimer);
+    document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('show'));
+    item.classList.add('show');
+  }
+  function hideDDLater(){
+    hideTimer = setTimeout(()=>{
+      document.querySelectorAll('.menu-item').forEach(i=>i.classList.remove('show'));
+    }, 200); // 200ms 缓冲，鼠标可以越过空隙
+  }
+
+  menu.querySelectorAll('.menu-item').forEach(item=>{
+    const dd = document.getElementById(item.dataset.dd);
+    item.addEventListener('mouseenter', ()=>showDD(item));
+    item.addEventListener('mouseleave', hideDDLater);
+    if(dd){
+      dd.addEventListener('mouseenter', ()=>clearTimeout(hideTimer));
+      dd.addEventListener('mouseleave', hideDDLater);
+    }
+  });
+})();
+
+/** —— 简单搜索（在标题里包含关键字就高亮匹配）—— */
+function siteSearch(q){
+  if(!q){return}
+  const url = '{{ "/articles.html" | relative_url }}' + '?q=' + encodeURIComponent(q);
+  location.href = url;
+}
+
+/** —— 微信二维码悬停 —— */
+(function(){
+  const btn = document.getElementById('wxFab');
+  const box = document.getElementById('wxQR');
+  let t=null;
+  function show(){ clearTimeout(t); box.classList.add('show'); }
+  function hide(){ t=setTimeout(()=>box.classList.remove('show'), 180); }
+  btn.addEventListener('mouseenter', show);
+  btn.addEventListener('mouseleave', hide);
+  box.addEventListener('mouseenter', show);
+  box.addEventListener('mouseleave', hide);
+})();
+
+/** —— 阅读量统计（按 slug）——
+ * 用法：
+ *   1) 如果你有自己的统计服务，把下面 COUNTER_BASE 改成你的接口根地址；
+ *   2) 接口格式（示例）：
+ *      GET  COUNTER_BASE + '/hit?slug=xxx'   -> 返回 { count: 123 }
+ *   3) 如果没有服务，本代码会优雅降级——只显示日期、不报错。
+ */
+(function(){
+  const COUNTER_BASE = ''; // 例如 'https://your-counter.example.com'，暂时留空则降级
+
+  async function updateOne(el){
+    const slug = el.getAttribute('data-slug');
+    if(!slug){ el.textContent=''; return; }
+    if(!COUNTER_BASE){
+      // 降级：没有统计服务，隐藏“读取中…”
+      el.textContent='';
+      return;
+    }
+    try{
+      const r = await fetch(COUNTER_BASE + '/hit?slug=' + encodeURIComponent(slug), {cache:'no-store'});
+      if(!r.ok) throw 0;
+      const data = await r.json();
+      el.textContent = '阅读(' + (data.count||0) + ')';
+    }catch(e){
+      el.textContent='';
+    }
+  }
+
+  document.querySelectorAll('.views').forEach(updateOne);
+})();
+</script>
+
+</body>
+</html>
