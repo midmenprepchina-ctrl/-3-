@@ -14,3 +14,52 @@ layout: default
     <a href="{{ site.baseurl }}/index.html">← 返回首页</a>
   </p>
 </article>
+<!-- _layouts/article.html -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ page.title }} - 木子AI</title>
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+</head>
+<body>
+
+{% include nav.html %}
+
+<main class="container">
+  <article class="article">
+    <h1 class="article-title">{{ page.title }}</h1>
+    <p class="article-meta">
+      <time>{{ page.date | date: "%Y-%m-%d" }}</time>
+      · <span id="pv" class="muted">阅读(--)</span>
+    </p>
+    <div class="article-content">
+      {{ content }}
+    </div>
+  </article>
+</main>
+
+<script>
+/**
+ * 文章页：真实阅读量计数（CounterAPI）
+ * 命名空间请自定义为只含字母数字与短横线的字符串，避免与他人冲突
+ */
+const NAMESPACE = 'midmen-3-counter';        // ← 建议：你的仓库名派生
+const KEY = '{{ page.slug | escape }}';      // 文章唯一 key
+
+// 进入文章页：先+1，再读取数值显示
+(async () => {
+  try {
+    await fetch(`https://counterapi.dev/api/${NAMESPACE}/${KEY}/hit`, { cache: 'no-store' });
+    const res = await fetch(`https://counterapi.dev/api/${NAMESPACE}/${KEY}`, { cache: 'no-store' });
+    const json = await res.json();
+    const pv = json?.count ?? 0;
+    document.getElementById('pv').textContent = `阅读(${pv})`;
+  } catch (e) {
+    console.warn('计数失败', e);
+  }
+})();
+</script>
+</body>
+</html>
